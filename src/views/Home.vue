@@ -1,19 +1,17 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <Houses msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import Houses from "@/components/Houses.vue"; // @ is an alias to /src
 
-@Component({
+export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Home",
   components: {
-    HelloWorld,
+    Houses,
   },
-})
-export default class HomeView extends Vue {
-}
+};
 </script>
