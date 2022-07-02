@@ -34,15 +34,15 @@ export default {
 .navigation {
   display: flex;
   height: 45px;
+  margin-bottom: 90px;
 
   &__container {
     display: flex;
     align-items: center;
-    margin: auto;
 
     &__image {
       height: 45px;
-      margin-right: 30px;
+      margin-right: 20px;
     }
 
     &__item {
@@ -51,11 +51,13 @@ export default {
       font-size: 18px;
       text-decoration: unset;
       padding: 10px;
-      margin-right: 30px;
+      margin-right: 20px;
+      cursor: pointer;
     }
     .router-link-exact-active {
       @include font-montserrat-bold;
       color: $text-primary;
+      cursor: default;
     }
   }
 }
