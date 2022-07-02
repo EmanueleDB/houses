@@ -1,29 +1,25 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
+import Houses from "../components/Houses.vue";
+import About from "../components/About.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "home",
-    component: Home,
+    name: "houses",
+    component: Houses,
   },
   {
     path: "/about",
     name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    component: About,
   },
 ];
 
 const router = new VueRouter({
   routes,
 });
-
-// const app = new Vue({
-//   router,
-// }).$mount("#app");
 
 export default router;
