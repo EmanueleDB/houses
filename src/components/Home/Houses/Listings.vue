@@ -73,6 +73,9 @@ export default {
   },
   computed: {
     availableHouses() {
+      if (this.filter === "price")
+        this.houses = this.houses.sort((a, b) => (a.price > b.price ? 1 : -1))
+      else this.houses = this.houses.sort((a, b) => (a.size > b.size ? 1 : -1))
       if (this.searchQuery === "") return this.houses
       return this.houses?.filter((house) =>
         house.location.street?.includes(this.searchQuery)
