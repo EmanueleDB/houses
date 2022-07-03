@@ -25,7 +25,26 @@
           placeholder="Search for a house"
           class="container__row__input-text"
         />
-        <button>dsfdsfdsf</button>
+        <div class="tab container__row__tab">
+          <button
+            :class="[
+              'container__row__tab__price',
+              { active: clicked === 'price' },
+            ]"
+            @click="clicked = 'price'"
+          >
+            Price
+          </button>
+          <button
+            :class="[
+              'container__row__tab__size',
+              { active: clicked === 'size' },
+            ]"
+            @click="clicked = 'size'"
+          >
+            Size
+          </button>
+        </div>
       </div>
       <div class="container__list">
         <h1>sds</h1>
@@ -36,11 +55,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Houses",
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      clicked: "price",
+      houses: [],
+    };
+  },
+  mounted() {
+    this.getHouses();
+  },
+  methods: {
+    async getHouses() {
+      try {
+        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY };
+        const response = await axios.get(
+          "https://api.intern.d-tt.nl/api/houses",
+          { headers }
+        );
+        this.houses = response.data;
+        console.log(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>
@@ -92,13 +137,35 @@ export default {
       }
 
       &__input-text {
-        width: 50%;
+        width: 40%;
         border: unset;
         border-radius: 5px;
         padding: 10px 0 10px 40px;
         background-color: $tertiary-light;
         &::placeholder {
           color: $tertiary;
+        }
+      }
+
+      &__tab {
+        &__price,
+        &__size {
+          background-color: $tertiary;
+          width: 110px;
+          color: $white;
+          padding: 10px 0;
+          border: unset;
+          cursor: pointer;
+
+          &.active {
+            background-color: $primary;
+          }
+        }
+        &__price {
+          border-radius: 5px 0 0 5px;
+        }
+        &__size {
+          border-radius: 0 5px 5px 0;
         }
       }
     }
