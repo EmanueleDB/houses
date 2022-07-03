@@ -3,10 +3,16 @@
 @import "_mixins.scss";
 @import "_grid.scss";
 
-html,
 body {
   font-family: Montserrat, OpenSans;
-  margin: 20px 10% 0 10%;
+
+  @include respond-to("xs") {
+    margin: 0 4%;
+  }
+
+  @include respond-to("md") {
+    margin: 20px 10% 0 10%;
+  }
 
   h1 {
     margin: 0;
@@ -14,5 +20,9 @@ body {
 
   li {
     list-style-type: none;
+  }
+
+  p {
+    margin: 0;
   }
 }
