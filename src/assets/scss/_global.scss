@@ -4,11 +4,9 @@
 @import "_grid.scss";
 
 body {
+  position: relative;
   font-family: Montserrat, OpenSans;
-
-  @include respond-to("xs") {
-    margin: 0 4%;
-  }
+  margin: 0 4%;
 
   @include respond-to("md") {
     margin: 20px 10% 0 10%;

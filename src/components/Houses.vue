@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="container">
-      <div class="container__row">
+      <div class="container__top">
         <h1>Houses</h1>
-        <div class="container__row__button-container">
+        <div class="container__top__button-container">
           <button
             v-if="windowWidth > 455"
-            class="container__row__button-container__button"
+            class="container__top__button-container__button"
           >
             <img
-              class="container__row__button-container__button__icon"
+              class="container__top__button-container__button__icon"
               src="../static/images/ic_plus_white@3x.png"
               alt="plus-icon"
             />
@@ -17,21 +17,21 @@
           </button>
         </div>
       </div>
-      <div class="container__row">
+      <div class="container__search">
         <img
-          class="container__row__search-icon"
+          class="container__search__icon"
           src="../static/images/ic_search@3x.png"
           alt="search icon"
         />
         <input
           type="text"
           placeholder="Search for a house"
-          class="container__row__input-text"
+          class="container__search__input-text"
         />
-        <div class="tab container__row__tab">
+        <div class="tab container__search__tab">
           <button
             :class="[
-              'container__row__tab__price',
+              'container__search__tab__price',
               { active: clicked === 'price' },
             ]"
             @click="clicked = 'price'"
@@ -40,7 +40,7 @@
           </button>
           <button
             :class="[
-              'container__row__tab__size',
+              'container__search__tab__size',
               { active: clicked === 'size' },
             ]"
             @click="clicked = 'size'"
@@ -141,8 +141,7 @@ export default {
       }
     },
     checkScreenSize(e) {
-      this.windowWidth = e.currentTarget.innerWidth;
-      console.log(this.windowWidth)
+      this.windowWidth = e.currentTarget.innerWidth
     },
   },
 }
@@ -153,15 +152,23 @@ export default {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 
-  &__row {
+  &__top {
     position: relative;
     display: flex;
-    justify-content: space-between;
     grid-column: span 12;
-    margin-bottom: 2rem;
+    margin: 1rem 0;
+    justify-content: center;
+
+    @include respond-to("md") {
+      justify-content: space-between;
+      margin: 3rem 0 1rem 0;
+    }
 
     h1 {
-      
+      font-size: 22px;
+      @include respond-to("md") {
+        font-size: 2rem;
+      }
     }
 
     &__button-container {
@@ -182,19 +189,38 @@ export default {
         }
       }
     }
+  }
 
-    &__search-icon {
+  &__search {
+    position: relative;
+    display: flex;
+    grid-column: span 12;
+    margin-bottom: 2rem;
+    flex-direction: column;
+    align-items: center;
+
+    @include respond-to("md") {
+      flex-direction: unset;
+      align-items: unset;
+      justify-content: space-between;
+    }
+
+    &__icon {
       position: absolute;
       width: 15px;
       height: 15px;
-      top: 50%;
+      top: 20%;
       left: 20px;
       transform: translate(-50%, -50%);
       color: $tertiary;
+
+      @include respond-to("md") {
+        top: 50%;
+      }
     }
 
     &__input-text {
-      width: 40%;
+      width: calc(100% - 40px);
       border: unset;
       border-radius: 5px;
       padding: 10px 0 10px 40px;
@@ -202,13 +228,23 @@ export default {
       &::placeholder {
         color: $tertiary;
       }
+      @include respond-to("md") {
+        width: 40%;
+      }
     }
 
     &__tab {
+      width: 100%;
+      margin-top: 1rem;
+      @include respond-to("md") {
+        width: 30%;
+        margin-top: 0;
+      }
+
       &__price,
       &__size {
         background-color: $tertiary;
-        width: 110px;
+        width: 50%;
         color: $white;
         padding: 10px 0;
         border: unset;
@@ -232,7 +268,11 @@ export default {
     flex-direction: column;
     grid-column: span 12;
     justify-content: space-between;
-    width: 60%;
+    width: 80%;
+
+    @include respond-to("md") {
+      width: 60%;
+    }
 
     &__house {
       display: flex;
