@@ -1,0 +1,129 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+
+  &__top {
+    position: relative;
+    display: flex;
+    grid-column: span 12;
+    margin: 1rem 0;
+    justify-content: center;
+
+    @include respond-to("md") {
+      justify-content: space-between;
+      margin: 3rem 0 1rem 0;
+    }
+
+    h1 {
+      font-size: 22px;
+      @include respond-to("md") {
+        font-size: 2rem;
+      }
+    }
+
+    &__button-container {
+      margin: auto 0;
+      &__button {
+        @include font-montserrat-semiBold;
+        width: 150px;
+        padding: 10px;
+        border-radius: 5px;
+        border: unset;
+        text-transform: uppercase;
+        background-color: $primary;
+        color: $white;
+        cursor: pointer;
+        &__icon {
+          width: 11px;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  &__search {
+    position: relative;
+    display: flex;
+    grid-column: span 12;
+    margin-bottom: 2rem;
+    flex-direction: column;
+    align-items: center;
+
+    @include respond-to("md") {
+      flex-direction: unset;
+      align-items: unset;
+      justify-content: space-between;
+    }
+
+    &__clear {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      left: 95%;
+      top: 12%;
+      cursor: pointer;
+
+      @include respond-to("md") {
+        left: 40%;
+        top: 25%;
+      }
+    }
+
+    &__icon {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      top: 20%;
+      left: 20px;
+      transform: translate(-50%, -50%);
+      color: $tertiary;
+
+      @include respond-to("md") {
+        top: 50%;
+      }
+    }
+
+    &__input-text {
+      width: calc(100% - 40px);
+      border: unset;
+      border-radius: 5px;
+      padding: 10px 0 10px 40px;
+      background-color: $tertiary-light;
+      &::placeholder {
+        color: $tertiary;
+      }
+      @include respond-to("md") {
+        width: 40%;
+      }
+    }
+
+    &__tab {
+      width: 100%;
+      margin-top: 1rem;
+      @include respond-to("md") {
+        width: 30%;
+        margin-top: 0;
+      }
+
+      &__price,
+      &__size {
+        background-color: $tertiary;
+        width: 50%;
+        color: $white;
+        padding: 10px 0;
+        border: unset;
+        cursor: pointer;
+
+        &.active {
+          background-color: $primary;
+        }
+      }
+      &__price {
+        border-radius: 5px 0 0 5px;
+      }
+      &__size {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+  }
+}

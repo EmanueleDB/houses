@@ -1,0 +1,64 @@
+.container {
+  &__house-list {
+    display: flex;
+    flex-direction: column;
+    grid-column: span 12;
+    justify-content: space-between;
+    width: 80%;
+
+    @include respond-to("md") {
+      width: 60%;
+    }
+
+    &__house {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 3rem;
+
+      &__image {
+        width: 150px;
+        border-radius: 5px;
+        margin-right: 2rem;
+
+        @include respond-to("xs") {
+          margin-right: 1rem;
+        }
+      }
+      &__details {
+        padding: 10px;
+
+        &__street {
+          @include font-montserrat-bold;
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        &__price,
+        &__zip {
+          @include font-montserrat-regular;
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+        &__zip {
+          color: $tertiary;
+        }
+        &__rooms {
+          display: flex;
+          align-items: center;
+
+          &__image {
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+          }
+
+          &__specs {
+            @include font-montserrat-regular;
+            font-size: 14px;
+            color: $tertiary;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
