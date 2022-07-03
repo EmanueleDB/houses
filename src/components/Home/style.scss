@@ -1,0 +1,43 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+
+  &__top {
+    position: relative;
+    display: flex;
+    grid-column: span 12;
+    margin: 1rem 0;
+    justify-content: center;
+
+    @include respond-to("md") {
+      justify-content: space-between;
+      margin: 3rem 0 1rem 0;
+    }
+
+    h1 {
+      font-size: 22px;
+      @include respond-to("md") {
+        font-size: 2rem;
+      }
+    }
+
+    &__button-container {
+      margin: auto 0;
+      &__button {
+        @include font-montserrat-semiBold;
+        width: 150px;
+        padding: 10px;
+        border-radius: 5px;
+        border: unset;
+        text-transform: uppercase;
+        background-color: $primary;
+        color: $white;
+        cursor: pointer;
+        &__icon {
+          width: 11px;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
