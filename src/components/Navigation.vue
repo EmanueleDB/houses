@@ -49,7 +49,7 @@ export default {
         {
           id: 1,
           url: "/",
-          name: "Houses",
+          name: "Listings",
           icon: {
             default: "ic_mobile_navigarion_home@3x.png",
             active: "ic_mobile_navigarion_home_active@3x.png",
