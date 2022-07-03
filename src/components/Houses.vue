@@ -5,7 +5,7 @@
         <h1>Houses</h1>
         <div class="container__row__button-container">
           <button
-            v-if="displaySize"
+            v-if="windowWidth > 455"
             class="container__row__button-container__button"
           >
             <img
@@ -116,21 +116,15 @@ export default {
     return {
       clicked: "price",
       houses: [],
-      displaySize: null,
+      windowWidth: window.innerWidth,
     }
   },
-  computed: {},
-  watch: {
-    screenSize(to) {
-      console.log(to)
-      if (to > 450) this.displaySize = true
-      this.displaySize = false
-    },
-  },
   mounted() {
-    window.addEventListener("resize", this.screenSize)
-
+    window.addEventListener("resize", this.checkScreenSize)
     this.getHouses()
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.checkScreenSize)
   },
   methods: {
     async getHouses() {
@@ -146,9 +140,9 @@ export default {
         console.log(e)
       }
     },
-    screenSize(e) {
-      this.displaySize = e.target
-      console.log(e.innerWidth)
+    checkScreenSize(e) {
+      this.windowWidth = e.currentTarget.innerWidth;
+      console.log(this.windowWidth)
     },
   },
 }
@@ -165,6 +159,10 @@ export default {
     justify-content: space-between;
     grid-column: span 12;
     margin-bottom: 2rem;
+
+    h1 {
+      
+    }
 
     &__button-container {
       margin: auto 0;
