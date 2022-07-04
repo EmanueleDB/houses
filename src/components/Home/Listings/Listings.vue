@@ -1,5 +1,8 @@
 <template>
   <div class="container__house-list">
+    <h3 v-if="searchQuery !== '' && count !== 0" style="margin-top: 0">
+      {{ this.count }} results found
+    </h3>
     <div
       v-for="house in availableHouses"
       class="container__house-list__house"
@@ -71,6 +74,15 @@
         />
       </div>
     </div>
+    <div v-if="count === 0" class="container__house-list__not-found">
+      <img
+        src="../../../static/images/img_empty_houses@3x.png"
+        alt="not-found-image"
+        class="container__house-list__not-found__image"
+      />
+      <p>No results found.</p>
+      <p>Please try another keyword.</p>
+    </div>
   </div>
 </template>
 
@@ -92,6 +104,7 @@ export default {
   data() {
     return {
       houses: [],
+      count: null,
     }
   },
   computed: {
@@ -103,6 +116,11 @@ export default {
       return this.houses?.filter((house) =>
         house.location.street?.includes(this.searchQuery)
       )
+    },
+  },
+  watch: {
+    availableHouses(to) {
+      if (to) this.count = to.length
     },
   },
   mounted() {
