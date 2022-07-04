@@ -10,7 +10,7 @@
     >
       <div
         class="container__house-list__house__wrapper"
-        @click="$router.push({ path: `/house/${house.id}`})"
+        @click="$router.push({ path: `/house/${house.id}` })"
       >
         <img
           :src="house.image"
@@ -97,11 +97,19 @@ export default {
   props: {
     sortBy: {
       type: String,
-      required: true,
+      default: "price",
     },
     searchQuery: {
       type: String,
-      required: true,
+      default: "",
+    },
+    selectedId: {
+      type: Number,
+      default: null,
+    },
+    shortList: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -112,6 +120,11 @@ export default {
   },
   computed: {
     availableHouses() {
+      if (this.shortList) {
+        return this.houses
+          .filter((house) => house.id !== this.selectedId)
+          .splice(0, 3)
+      }
       if (this.sortBy === "price")
         this.houses = this.houses.sort((a, b) => (a.price > b.price ? 1 : -1))
       else this.houses = this.houses.sort((a, b) => (a.size > b.size ? 1 : -1))
@@ -143,7 +156,7 @@ export default {
           { headers }
         )
         this.houses = response.data
-        this.$store.commit('fetchHouses', response.data)
+        this.$store.commit("fetchHouses", response.data)
       } catch (e) {
         console.log(e)
       }
