@@ -5,7 +5,7 @@
         class="navigation__container__image"
         src="../static/images/img_logo_dtt@3x.png"
         alt="logo"
-        @click="$router.push({ path: '/' })"
+        @click="$router.push('/').catch(()=>{});"
       />
       <ul v-for="item in navItems" :key="item.id">
         <router-link class="navigation__container__item" :to="item.url">{{
