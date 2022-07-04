@@ -1,6 +1,6 @@
 <template>
   <div class="container__house-list">
-    <h3 v-if="searchQuery !== ''" style="margin-top: 0">
+    <h3 v-if="searchQuery !== '' && count !== 0" style="margin-top: 0">
       {{ this.count }} results found
     </h3>
     <div
@@ -73,6 +73,15 @@
           alt="edit"
         />
       </div>
+    </div>
+    <div v-if="count === 0" class="container__house-list__not-found">
+      <img
+        src="../../../static/images/img_empty_houses@3x.png"
+        alt="not-found-image"
+        class="container__house-list__not-found__image"
+      />
+      <p>No results found.</p>
+      <p>Please try another keyword.</p>
     </div>
   </div>
 </template>
