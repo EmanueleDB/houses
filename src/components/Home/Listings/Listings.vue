@@ -61,21 +61,7 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="house.madeByMe"
-        class="container__house-list__house__edit-container"
-      >
-        <img
-          class="container__house-list__house__edit-container__icon"
-          src="../../../static/images/ic_edit@3x.png"
-          alt="edit"
-        />
-        <img
-          class="container__house-list__house__edit-container__icon"
-          src="../../../static/images/ic_delete@3x.png"
-          alt="edit"
-        />
-      </div>
+      <EditDelete v-if="house.madeByMe"/>
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img
@@ -91,9 +77,13 @@
 
 <script>
 import axios from "axios"
+import EditDelete from "./EditDelete"
 
 export default {
   name: "Listings",
+  components: {
+    EditDelete,
+  },
   props: {
     sortBy: {
       type: String,
@@ -156,7 +146,7 @@ export default {
           { headers }
         )
         this.houses = response.data
-        this.$store.commit("fetchHouses", response.data)
+        this.$store.commit("setListings", response.data)
       } catch (e) {
         console.log(e)
       }

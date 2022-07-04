@@ -7,12 +7,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    houses: [],
+    listings: [],
+    selectedListing: {}
   },
   getters: {},
   mutations: {
-    fetchHouses(state: any, payload: object) {
-      state.houses = payload
+    setListings(state: any, payload: object) {
+      state.listings = payload
+    },
+    setSelectedListing(state: any, payload: object) {
+      state.selectedListing = payload
     },
   },
   actions: {},

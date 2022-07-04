@@ -1,6 +1,6 @@
 <template>
   <nav class="navigation">
-    <div v-if="windowWidth > 455" class="navigation__container">
+    <div v-if="windowWidth > 420" class="navigation__container">
       <img
         class="navigation__container__image"
         src="../static/images/img_logo_dtt@3x.png"
@@ -50,7 +50,7 @@ export default {
         {
           id: 1,
           url: "/",
-          name: "Listings",
+          name: "Houses",
           icon: {
             default: "ic_mobile_navigarion_home@3x.png",
             active: "ic_mobile_navigarion_home_active@3x.png",
@@ -88,6 +88,7 @@ export default {
 <style lang="scss">
 .navigation {
   display: flex;
+  background-color: $white;
 
   &__container {
     display: flex;
@@ -98,11 +99,13 @@ export default {
     right: 0;
     width: 100%;
     height: 55px;
-    background-color: $background;
+    background-color: $white;
 
-    @include respond-to("md") {
+    @include respond-to("xsm") {
       position: relative;
       justify-content: unset;
+      margin: 0 10%;
+      padding: 10px 0;
     }
 
     &__image {

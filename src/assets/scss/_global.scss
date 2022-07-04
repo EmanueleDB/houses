@@ -6,10 +6,12 @@
 body {
   position: relative;
   font-family: Montserrat, OpenSans;
-  margin: 0 4%;
+  margin: 0;
+  background-color: $background;
+  //margin: 0 4%;
 
   @include respond-to("md") {
-    margin: 20px 10% 0 10%;
+    //margin: 20px 10% 0 10%;
   }
 
   h1 {

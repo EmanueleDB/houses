@@ -1,46 +1,102 @@
 .container {
+  div:nth-child(5) {
+    justify-content: space-between;
+    border-radius: 20px 20px 0 0;
+
+    @include respond-to("md") {
+      border-radius: 0;
+    }
+  }
+  &__back {
+    display: none;
+    @include respond-to("md") {
+      margin-top: 3rem;
+      grid-column: span 12;
+      display: flex;
+      font-size: 1rem;
+      @include font-montserrat-semiBold;
+
+      &__icon {
+        width: 15px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+  }
   &__detail {
     display: flex;
     grid-column: span 12;
-    margin: 1rem 0;
+    margin: 0;
     justify-content: center;
 
     @include respond-to("md") {
+      grid-column: span 7;
       justify-content: unset;
-      margin: 3rem 0 1rem 0;
+      margin: 1rem 0 0 0;
       width: 100%;
     }
 
-    &__back {
-      display: none;
-      @include respond-to("md") {
-        display: flex;
-        font-size: 1rem;
-        @include font-montserrat-semiBold;
-
-        &__icon {
-          width: 15px;
-          margin-right: 10px;
-          cursor: pointer;
-        }
-      }
-    }
     &__image {
+      width: 100%;
       @include respond-to("md") {
-        width: 60%;
+        width: 100%;
         margin-right: 10%;
-      }
-    }
-
-    &__reccomended {
-      h3 {
-        margin-top: 0;
       }
     }
 
     &__specs {
       display: flex;
       flex-direction: column;
+    }
+  }
+  &__space {
+    display: none;
+
+    @include respond-to("md") {
+      display: unset;
+      grid-column: span 1;
+    }
+  }
+  &__reccomended {
+    order: 4;
+    grid-column: span 12;
+    width: 90%;
+    margin: 0 auto;
+
+    .container__house-list {
+      width: 100%;
+    }
+
+    @include respond-to("md") {
+      order: unset;
+    }
+
+    @include respond-to("md") {
+      margin: 1rem 0;
+      grid-column: span 4;
+      display: grid;
+      grid-template-rows: auto;
+    }
+    h3 {
+      margin-top: 0;
+    }
+  }
+  &__infos {
+    display: flex;
+    grid-column: span 12;
+    padding: 1rem;
+    order: 3;
+    background-color: $white;
+
+    @include respond-to("md") {
+      order: unset;
+      grid-column: span 7;
+    }
+
+    &__icon {
+      width: 15px;
+      height: 15px;
+      margin: 0 10px;
     }
   }
 }
