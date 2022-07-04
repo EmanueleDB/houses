@@ -3,7 +3,6 @@
   grid-template-columns: repeat(12, 1fr);
 
   &__top {
-    position: relative;
     display: flex;
     grid-column: span 12;
     margin: 1rem 0;
