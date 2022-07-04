@@ -8,7 +8,10 @@
       class="container__house-list__house"
       :key="house.id"
     >
-      <div class="container__house-list__house__wrapper">
+      <div
+        class="container__house-list__house__wrapper"
+        @click="$router.push({ path: `/house/${house.id}`})"
+      >
         <img
           :src="house.image"
           alt="house-image"
@@ -140,7 +143,7 @@ export default {
           { headers }
         )
         this.houses = response.data
-        console.log(response.data)
+        this.$store.commit('fetchHouses', response.data)
       } catch (e) {
         console.log(e)
       }
