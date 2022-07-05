@@ -64,8 +64,8 @@
             align-items: center;
 
             &__image {
-              width: 15px;
-              height: 15px;
+              width: 20px;
+              height: 20px;
               margin-right: 10px;
             }
 
@@ -78,14 +78,6 @@
           }
         }
       }
-      //&__edit-container {
-      //  display: flex;
-      //  &__icon {
-      //    width: 15px;
-      //    height: 15px;
-      //    margin-left: 10px;
-      //  }
-      //}
     }
 
     &__not-found {

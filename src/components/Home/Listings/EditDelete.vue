@@ -45,15 +45,15 @@ export default {
   display: flex;
 
   &__icon {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     margin-left: 10px;
   }
 
   &__top {
     position: absolute;
     top: 80px;
-    right: 20px;
+    right: 30px;
 
     @include respond-to("md") {
       position: unset;

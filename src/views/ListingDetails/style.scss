@@ -8,7 +8,11 @@
     }
   }
   &__back {
+    position: absolute;
+    top: 80px;
+    left: 30px;
     @include respond-to("md") {
+      position: unset;
       margin: 3rem 0 2rem 0;
       grid-column: span 12;
       display: flex;
@@ -16,7 +20,8 @@
       @include font-montserrat-semiBold;
     }
     &__icon {
-      width: 15px;
+      width: 20px;
+      height: 20px;
       margin-right: 10px;
       cursor: pointer;
     }
@@ -98,8 +103,8 @@
     }
 
     &__icon {
-      width: 15px;
-      height: 15px;
+      width: 20px;
+      height: 20px;
       margin: 0 10px;
     }
   }

@@ -33,7 +33,7 @@
       <h1 v-if="selectedListing.location">
         {{ selectedListing.location.street }}
       </h1>
-      <EditDelete  :change-position="true" />
+      <EditDelete v-if="selectedListing.madeByMe" :change-position="true" />
     </div>
     <div class="container__infos">
       <img
