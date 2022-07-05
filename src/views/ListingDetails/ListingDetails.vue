@@ -1,18 +1,6 @@
 <template>
   <div class="container">
-    <div class="container__back">
-      <img
-        class="container__back__icon"
-        :src="
-          windowWidth > 768
-            ? require(`../../static/images/ic_back_grey@3x.png`)
-            : require(`../../static/images/ic_back_white@3x.png`)
-        "
-        alt="back"
-        @click="$router.push({ path: '/' })"
-      />
-      <p class="container__back__text">Back to overview</p>
-    </div>
+    <Back />
     <div class="container__detail">
       <img
         class="container__detail__image"
@@ -64,10 +52,12 @@ import Listings from "@/components/Home/Listings/Listings"
 import ImageHelper from "./Helpers/IconHelper"
 import EditDelete from "@/components/Home/Listings/EditDelete"
 import Section from "./Helpers/Section"
+import Back from "./Helpers/Back"
 
 export default {
   name: "ListingDetails",
   components: {
+    Back,
     Listings,
     ImageHelper,
     Section,
@@ -121,9 +111,6 @@ export default {
     },
     selectedListing() {
       return this.$store.state.selectedListing
-    },
-    windowWidth() {
-      return this.$store.state.windowWidth
     },
   },
   mounted() {

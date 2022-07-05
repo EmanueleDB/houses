@@ -21,6 +21,12 @@ const routes: Array<RouteConfig> = [
     component: () => import("../views/ListingDetails/ListingDetails.vue"),
     props: (route) => ({ ...route.params }),
   },
+  {
+    path: "/new",
+    name: "newListing",
+    component: () => import("../views/NewListing/NewListing.vue"),
+    props: (route) => ({ ...route.params }),
+  },
 ]
 
 const router = new VueRouter({
