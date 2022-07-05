@@ -10,7 +10,7 @@
   &__back {
     display: none;
     @include respond-to("md") {
-      margin-top: 3rem;
+      margin: 3rem 0 2rem 0;
       grid-column: span 12;
       display: flex;
       font-size: 1rem;
@@ -32,7 +32,6 @@
     @include respond-to("md") {
       grid-column: span 7;
       justify-content: unset;
-      margin: 1rem 0 0 0;
       width: 100%;
     }
 

@@ -8,7 +8,8 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     listings: [],
-    selectedListing: {}
+    selectedListing: {},
+    navigationActiveItem: ''
   },
   getters: {},
   mutations: {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     setSelectedListing(state: any, payload: object) {
       state.selectedListing = payload
+    },
+    setNavigationActiveItem(state: any, payload: string) {
+      state.navigationActiveItem = payload
     },
   },
   actions: {},

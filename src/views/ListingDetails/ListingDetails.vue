@@ -19,13 +19,13 @@
     <div class="container__space" />
     <div class="container__reccomended">
       <h3>Reccomended for you</h3>
-      <Listings :short-list="true" :selected-id="selectedListing.id" />
+      <Listings :short-list="true" :selected-id="selectedListing.id" :show-edit="false"/>
     </div>
     <div class="container__infos">
       <h1 v-if="selectedListing.location">
         {{ selectedListing.location.street }}
       </h1>
-      <EditDelete />
+      <EditDelete :change-position="true"/>
     </div>
     <div class="container__infos">
       <img

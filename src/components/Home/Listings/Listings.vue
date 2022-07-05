@@ -10,7 +10,7 @@
     >
       <div
         class="container__house-list__house__wrapper"
-        @click="$router.push({ path: `/house/${house.id}` })"
+        @click="setRoute(house.id)"
       >
         <img
           :src="house.image"
@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      <EditDelete v-if="house.madeByMe"/>
+      <EditDelete v-if="showEdit"/>
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img
@@ -98,6 +98,10 @@ export default {
       default: null,
     },
     shortList: {
+      type: Boolean,
+      default: false,
+    },
+    showEdit: {
       type: Boolean,
       default: false,
     },
@@ -151,6 +155,10 @@ export default {
         console.log(e)
       }
     },
+    setRoute(id) {
+      this.$store.commit("setNavigationActiveItem", '/')
+      this.$router.push({ path: `/house/${id}` })
+    }
   },
 }
 </script>

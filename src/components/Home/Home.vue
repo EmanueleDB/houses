@@ -18,7 +18,7 @@
         </div>
       </div>
       <Search @sort="getFilter" @searchQuery="getInput" />
-      <Listings :sort-by="sort" :search-query="searchQuery" />
+      <Listings :sort-by="sort" :search-query="searchQuery" :show-edit="true"/>
     </div>
   </div>
 </template>

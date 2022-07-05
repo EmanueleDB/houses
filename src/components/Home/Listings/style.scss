@@ -6,7 +6,6 @@
     width: 90%;
     margin: 0 auto 55px auto;
 
-
     @include respond-to("md") {
       width: 100%;
       margin: 0;
@@ -26,8 +25,13 @@
         margin-bottom: 3rem;
       }
 
-        &__wrapper {
+      &__wrapper {
         display: flex;
+        width: 80%;
+
+        @include respond-to("md") {
+          width: unset;
+        }
 
         &__image {
           width: 150px;
@@ -74,14 +78,14 @@
           }
         }
       }
-      &__edit-container {
-        display: flex;
-        &__icon {
-          width: 15px;
-          height: 15px;
-          margin-left: 10px;
-        }
-      }
+      //&__edit-container {
+      //  display: flex;
+      //  &__icon {
+      //    width: 15px;
+      //    height: 15px;
+      //    margin-left: 10px;
+      //  }
+      //}
     }
 
     &__not-found {

@@ -5,12 +5,22 @@
         class="navigation__container__image"
         src="../static/images/img_logo_dtt@3x.png"
         alt="logo"
-        @click="$router.push('/').catch(()=>{});"
+        @click="
+          $router.push('/').catch(() => {})
+          setActiveBtn('/')
+        "
       />
       <ul v-for="item in navItems" :key="item.id">
-        <router-link class="navigation__container__item" :to="item.url">{{
-          item.name
-        }}</router-link>
+        <span @click="setActiveBtn(item.url)">
+          <router-link
+            :class="[
+              'navigation__container__item',
+              { 'router-link-exact-active': activeBtn === item.url },
+            ]"
+            :to="item.url"
+            >{{ item.name }}</router-link
+          ></span
+        >
       </ul>
     </div>
     <div v-else class="navigation__container">
@@ -22,12 +32,12 @@
         <router-link class="navigation__container__item" :to="item.url">
           <div
             class="navigation__container__item__wrapper"
-            @click="activeBtn = '#' + item.url"
+            @click="setActiveBtn(item.url)"
           >
             <img
               class="navigation__container__item__wrapper__image"
               :src="
-                activeBtn === '#' + item.url
+                activeBtn === item.url
                   ? require(`../static/images/${item.icon.active}`)
                   : require(`../static/images/${item.icon.default}`)
               "
@@ -66,12 +76,21 @@ export default {
           },
         },
       ],
-      activeBtn: "",
       windowWidth: window.innerWidth,
     }
   },
+  watch: {
+    activeBtn(to) {
+      this.setActiveBtn(to)
+    },
+  },
+  computed: {
+    activeBtn() {
+      return this.$store.state.navigationActiveItem
+    },
+  },
   mounted() {
-    this.activeBtn = window.location.hash
+    // this.$store.commit("setNavigationActiveItem", window.location.pathname)
     window.addEventListener("resize", this.checkScreenSize)
   },
   beforeDestroy() {
@@ -80,6 +99,9 @@ export default {
   methods: {
     checkScreenSize(e) {
       this.windowWidth = e.currentTarget.innerWidth
+    },
+    setActiveBtn(url) {
+      this.$store.commit("setNavigationActiveItem", url)
     },
   },
 }
