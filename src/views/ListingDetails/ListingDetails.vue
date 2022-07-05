@@ -3,11 +3,15 @@
     <div class="container__back">
       <img
         class="container__back__icon"
-        src="../../static/images/ic_back_grey@3x.png"
+        :src="
+          windowWidth > 768
+            ? require(`../../static/images/ic_back_grey@3x.png`)
+            : require(`../../static/images/ic_back_white@3x.png`)
+        "
         alt="back"
         @click="$router.push({ path: '/' })"
       />
-      <p>Back to overview</p>
+      <p class="container__back__text">Back to overview</p>
     </div>
     <div class="container__detail">
       <img
@@ -19,13 +23,17 @@
     <div class="container__space" />
     <div class="container__reccomended">
       <h3>Reccomended for you</h3>
-      <Listings :short-list="true" :selected-id="selectedListing.id" :show-edit="false"/>
+      <Listings
+        :short-list="true"
+        :selected-id="selectedListing.id"
+        :show-edit="false"
+      />
     </div>
     <div class="container__infos">
       <h1 v-if="selectedListing.location">
         {{ selectedListing.location.street }}
       </h1>
-      <EditDelete :change-position="true"/>
+      <EditDelete  :change-position="true" />
     </div>
     <div class="container__infos">
       <img
@@ -53,9 +61,9 @@
 
 <script>
 import Listings from "@/components/Home/Listings/Listings"
-import ImageHelper from "./IconHelper"
+import ImageHelper from "./Helpers/IconHelper"
 import EditDelete from "@/components/Home/Listings/EditDelete"
-import Section from "./Section"
+import Section from "./Helpers/Section"
 
 export default {
   name: "ListingDetails",
@@ -113,6 +121,9 @@ export default {
     },
     selectedListing() {
       return this.$store.state.selectedListing
+    },
+    windowWidth() {
+      return this.$store.state.windowWidth
     },
   },
   mounted() {

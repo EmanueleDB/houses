@@ -2,7 +2,7 @@
   <div style="display: flex">
     <img
       class="container__infos__icon"
-      :src="require(`../../static/images/${url}`)"
+      :src="require(`../../../static/images/${url}`)"
       :alt="alt"
     />
     <p>{{ subProperty ? value[property][subProperty] : value[property] }}</p>

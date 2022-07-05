@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      <EditDelete v-if="showEdit"/>
+      <EditDelete v-if="showEdit && house.madeByMe"/>
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img

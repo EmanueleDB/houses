@@ -1,6 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex)
 
@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     listings: [],
     selectedListing: {},
-    navigationActiveItem: ''
+    navigationActiveItem: "",
+    windowWidth: "",
   },
   getters: {},
   mutations: {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     setNavigationActiveItem(state: any, payload: string) {
       state.navigationActiveItem = payload
+    },
+    setWindowWidth(state: any, payload: number) {
+      state.windowWidth = payload
     },
   },
   actions: {},

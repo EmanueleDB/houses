@@ -30,19 +30,11 @@ export default {
     },
   },
   data() {
-    return {
-      windowWidth: window.innerWidth,
-    }
+    return {}
   },
-  mounted() {
-    window.addEventListener("resize", this.checkScreenSize)
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.checkScreenSize)
-  },
-  methods: {
-    checkScreenSize(e) {
-      this.windowWidth = e.currentTarget.innerWidth
+  computed: {
+    windowWidth() {
+      return this.$store.state.windowWidth
     },
   },
 }

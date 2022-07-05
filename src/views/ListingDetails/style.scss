@@ -8,18 +8,23 @@
     }
   }
   &__back {
-    display: none;
     @include respond-to("md") {
       margin: 3rem 0 2rem 0;
       grid-column: span 12;
       display: flex;
       font-size: 1rem;
       @include font-montserrat-semiBold;
+    }
+    &__icon {
+      width: 15px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
 
-      &__icon {
-        width: 15px;
-        margin-right: 10px;
-        cursor: pointer;
+    &__text {
+      display: none;
+      @include respond-to("md") {
+        display: unset;
       }
     }
   }

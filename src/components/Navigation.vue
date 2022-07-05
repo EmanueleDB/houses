@@ -76,7 +76,6 @@ export default {
           },
         },
       ],
-      windowWidth: window.innerWidth,
     }
   },
   watch: {
@@ -88,18 +87,11 @@ export default {
     activeBtn() {
       return this.$store.state.navigationActiveItem
     },
-  },
-  mounted() {
-    // this.$store.commit("setNavigationActiveItem", window.location.pathname)
-    window.addEventListener("resize", this.checkScreenSize)
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.checkScreenSize)
+    windowWidth() {
+      return this.$store.state.windowWidth
+    },
   },
   methods: {
-    checkScreenSize(e) {
-      this.windowWidth = e.currentTarget.innerWidth
-    },
     setActiveBtn(url) {
       this.$store.commit("setNavigationActiveItem", url)
     },

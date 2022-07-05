@@ -18,7 +18,7 @@
         </div>
       </div>
       <Search @sort="getFilter" @searchQuery="getInput" />
-      <Listings :sort-by="sort" :search-query="searchQuery" :show-edit="true"/>
+      <Listings :sort-by="sort" :search-query="searchQuery" :show-edit="true" />
     </div>
   </div>
 </template>
@@ -38,19 +38,14 @@ export default {
     return {
       searchQuery: "",
       sort: "price",
-      windowWidth: window.innerWidth,
     }
   },
-  mounted() {
-    window.addEventListener("resize", this.checkScreenSize)
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.checkScreenSize)
+  computed: {
+    windowWidth() {
+      return this.$store.state.windowWidth
+    },
   },
   methods: {
-    checkScreenSize(e) {
-      this.windowWidth = e.currentTarget.innerWidth
-    },
     getFilter(value) {
       this.sort = value
     },

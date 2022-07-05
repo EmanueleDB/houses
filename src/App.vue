@@ -14,6 +14,27 @@ export default {
   components: {
     Navigation,
   },
+  data() {
+    return {
+      windowWidth: "",
+    }
+  },
+  watch: {
+    windowWidth(to) {
+      this.$store.commit("setWindowWidth", to)
+    },
+  },
+  mounted() {
+    window.addEventListener("resize", this.checkScreenSize)
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.checkScreenSize)
+  },
+  methods: {
+    checkScreenSize(e) {
+      this.windowWidth = e.currentTarget.innerWidth
+    },
+  },
 }
 </script>
 
