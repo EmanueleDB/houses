@@ -1,0 +1,63 @@
+<template>
+  <div :class="['edit', { edit__top: changePosition }]">
+    <img
+      class="edit__icon"
+      :src="
+        changePosition && windowWidth < 768
+          ? require(`../../../static/images/ic_edit_white@3x.png`)
+          : require(`../../../static/images/ic_edit@3x.png`)
+      "
+      alt="edit"
+    />
+    <img
+      class="edit__icon"
+      :src="
+        changePosition && windowWidth < 768
+          ? require(`../../../static/images/ic_delete_white@3x.png`)
+          : require(`../../../static/images/ic_delete@3x.png`)
+      "
+      alt="edit"
+    />
+  </div>
+</template>
+<script>
+export default {
+  name: "EditDelete",
+  props: {
+    changePosition: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    windowWidth() {
+      return this.$store.state.windowWidth
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+.edit {
+  display: flex;
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+  }
+
+  &__top {
+    position: absolute;
+    top: 80px;
+    right: 30px;
+
+    @include respond-to("md") {
+      position: unset;
+    }
+  }
+}
+</style>

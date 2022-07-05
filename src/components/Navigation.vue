@@ -1,15 +1,26 @@
 <template>
   <nav class="navigation">
-    <div v-if="windowWidth > 455" class="navigation__container">
+    <div v-if="windowWidth > 420" class="navigation__container">
       <img
         class="navigation__container__image"
         src="../static/images/img_logo_dtt@3x.png"
         alt="logo"
+        @click="
+          $router.push('/').catch(() => {})
+          setActiveBtn('/')
+        "
       />
       <ul v-for="item in navItems" :key="item.id">
-        <router-link class="navigation__container__item" :to="item.url">{{
-          item.name
-        }}</router-link>
+        <span @click="setActiveBtn(item.url)">
+          <router-link
+            :class="[
+              'navigation__container__item',
+              { 'router-link-exact-active': activeBtn === item.url },
+            ]"
+            :to="item.url"
+            >{{ item.name }}</router-link
+          ></span
+        >
       </ul>
     </div>
     <div v-else class="navigation__container">
@@ -21,12 +32,12 @@
         <router-link class="navigation__container__item" :to="item.url">
           <div
             class="navigation__container__item__wrapper"
-            @click="activeBtn = '#' + item.url"
+            @click="setActiveBtn(item.url)"
           >
             <img
               class="navigation__container__item__wrapper__image"
               :src="
-                activeBtn === '#' + item.url
+                activeBtn === item.url
                   ? require(`../static/images/${item.icon.active}`)
                   : require(`../static/images/${item.icon.default}`)
               "
@@ -49,7 +60,7 @@ export default {
         {
           id: 1,
           url: "/",
-          name: "Listings",
+          name: "Houses",
           icon: {
             default: "ic_mobile_navigarion_home@3x.png",
             active: "ic_mobile_navigarion_home_active@3x.png",
@@ -65,20 +76,24 @@ export default {
           },
         },
       ],
-      activeBtn: '',
-      windowWidth: window.innerWidth,
     }
   },
-  mounted() {
-    this.activeBtn = window.location.hash
-    window.addEventListener("resize", this.checkScreenSize)
+  watch: {
+    activeBtn(to) {
+      this.setActiveBtn(to)
+    },
   },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.checkScreenSize)
+  computed: {
+    activeBtn() {
+      return this.$store.state.navigationActiveItem
+    },
+    windowWidth() {
+      return this.$store.state.windowWidth
+    },
   },
   methods: {
-    checkScreenSize(e) {
-      this.windowWidth = e.currentTarget.innerWidth
+    setActiveBtn(url) {
+      this.$store.commit("setNavigationActiveItem", url)
     },
   },
 }
@@ -87,6 +102,7 @@ export default {
 <style lang="scss">
 .navigation {
   display: flex;
+  background-color: $white;
 
   &__container {
     display: flex;
@@ -97,11 +113,13 @@ export default {
     right: 0;
     width: 100%;
     height: 55px;
-    background-color: $background;
+    background-color: $white;
 
-    @include respond-to("md") {
+    @include respond-to("xsm") {
       position: relative;
       justify-content: unset;
+      margin: 0 10%;
+      padding: 10px 0;
     }
 
     &__image {

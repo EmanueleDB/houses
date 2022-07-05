@@ -8,7 +8,10 @@
       class="container__house-list__house"
       :key="house.id"
     >
-      <div class="container__house-list__house__wrapper">
+      <div
+        class="container__house-list__house__wrapper"
+        @click="setRoute(house.id)"
+      >
         <img
           :src="house.image"
           alt="house-image"
@@ -58,21 +61,7 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="house.madeByMe"
-        class="container__house-list__house__edit-container"
-      >
-        <img
-          class="container__house-list__house__edit-container__icon"
-          src="../../../static/images/ic_edit@3x.png"
-          alt="edit"
-        />
-        <img
-          class="container__house-list__house__edit-container__icon"
-          src="../../../static/images/ic_delete@3x.png"
-          alt="edit"
-        />
-      </div>
+      <EditDelete v-if="showEdit && house.madeByMe"/>
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img
@@ -88,17 +77,33 @@
 
 <script>
 import axios from "axios"
+import EditDelete from "./EditDelete"
 
 export default {
   name: "Listings",
+  components: {
+    EditDelete,
+  },
   props: {
     sortBy: {
       type: String,
-      required: true,
+      default: "price",
     },
     searchQuery: {
       type: String,
-      required: true,
+      default: "",
+    },
+    selectedId: {
+      type: Number,
+      default: null,
+    },
+    shortList: {
+      type: Boolean,
+      default: false,
+    },
+    showEdit: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -109,12 +114,22 @@ export default {
   },
   computed: {
     availableHouses() {
+      if (this.shortList) {
+        return this.houses
+          .filter((house) => house.id !== this.selectedId)
+          .splice(0, 3)
+      }
       if (this.sortBy === "price")
         this.houses = this.houses.sort((a, b) => (a.price > b.price ? 1 : -1))
       else this.houses = this.houses.sort((a, b) => (a.size > b.size ? 1 : -1))
       if (this.searchQuery === "") return this.houses
-      return this.houses?.filter((house) =>
-        house.location.street?.includes(this.searchQuery)
+      return this.houses?.filter(
+        (house) =>
+          house.location.street?.includes(this.searchQuery) ||
+          house.location.city?.includes(this.searchQuery) ||
+          house.location.zip.includes(this.searchQuery) ||
+          house.price.toString().includes(this.searchQuery) ||
+          house.size.toString().includes(this.searchQuery)
       )
     },
   },
@@ -135,11 +150,15 @@ export default {
           { headers }
         )
         this.houses = response.data
-        console.log(response.data)
+        this.$store.commit("setListings", response.data)
       } catch (e) {
         console.log(e)
       }
     },
+    setRoute(id) {
+      this.$store.commit("setNavigationActiveItem", '/')
+      this.$router.push({ path: `/house/${id}` })
+    }
   },
 }
 </script>
