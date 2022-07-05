@@ -157,7 +157,7 @@ export default {
     },
     setRoute(id) {
       this.$store.commit("setNavigationActiveItem", '/')
-      this.$router.push({ path: `/house/${id}` })
+      this.$router.push({ path: `/listing/${id}` })
     }
   },
 }

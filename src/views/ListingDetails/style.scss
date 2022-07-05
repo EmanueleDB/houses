@@ -46,6 +46,10 @@
     width: 90%;
     margin: 0 auto;
 
+    h3 {
+      grid-column: span 12;
+    }
+
     .container__house-list {
       width: 100%;
     }
