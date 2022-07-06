@@ -22,7 +22,7 @@
                 v-model="newListing.houseNumber"
                 class="container__background__new__input"
                 style="margin-right: 20px"
-                type="text"
+                type="number"
               />
             </div>
             <div
@@ -33,7 +33,7 @@
               <input
                 v-model="newListing.numberAddition"
                 class="container__background__new__input"
-                type="text"
+                type="number"
               />
             </div>
           </div>
@@ -99,7 +99,7 @@
               <input
                 v-model="newListing.price"
                 class="container__background__new__input"
-                type="text"
+                type="number"
               />
             </div>
           </div>
@@ -110,7 +110,7 @@
                 v-model="newListing.size"
                 class="container__background__new__input"
                 style="margin-right: 20px"
-                type="text"
+                type="number"
               />
             </div>
             <div
@@ -135,7 +135,7 @@
                 v-model="newListing.bedrooms"
                 class="container__background__new__input"
                 style="margin-right: 20px"
-                type="text"
+                type="number"
               />
             </div>
             <div
@@ -146,7 +146,7 @@
               <input
                 v-model="newListing.bathrooms"
                 class="container__background__new__input"
-                type="text"
+                type="number"
               />
             </div>
           </div>
@@ -156,7 +156,7 @@
               <input
                 v-model="newListing.constructionYear"
                 class="container__background__new__input"
-                type="text"
+                type="number"
               />
             </div>
           </div>
@@ -224,13 +224,13 @@ export default {
     checkIfPatching() {
       if (this.isPatching) {
         const [street, number] =
-          this.$store.state.selectedListing.location.street.split(" ")
+          this.$store.state.listingToPatch.location.street.split(" ")
         this.newListing = {
           streetName: street,
           houseNumber: number,
-          city: this.$store.state.selectedListing.location.city,
-          zip: this.$store.state.selectedListing.location.zip,
-          ...this.$store.state.selectedListing,
+          city: this.$store.state.listingToPatch.location.city,
+          zip: this.$store.state.listingToPatch.location.zip,
+          ...this.$store.state.listingToPatch,
         }
       }
     },

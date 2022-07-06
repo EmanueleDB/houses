@@ -68,9 +68,9 @@ export default {
       }
     },
     async editListing(selectedListing) {
-      this.$store.commit("setSelectedListing", selectedListing)
+      this.$store.commit("setListingToPatch", selectedListing)
       this.$store.commit("isPatching", true)
-      this.$router.push({ path: "new-listing" })
+      this.$router.push({ path: `/edit-listing/${selectedListing.id}` })
     },
   },
 }

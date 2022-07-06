@@ -35,5 +35,8 @@ export default {
       return this.$store.state.selectedListing
     },
   },
+  mounted() {
+    console.log(this.value)
+  }
 }
 </script>

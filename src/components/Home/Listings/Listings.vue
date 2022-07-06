@@ -4,28 +4,28 @@
       {{ this.count }} results found
     </h3>
     <div
-      v-for="house in availableHouses"
+      v-for="listing in availableListings"
       class="container__house-list__house"
-      :key="house.id"
+      :key="listing.id"
     >
       <div
         class="container__house-list__house__wrapper"
-        @click="setRoute(house.id)"
+        @click="setRoute(listing)"
       >
         <img
-          :src="house.image"
+          :src="listing.image"
           alt="house-image"
           class="container__house-list__house__wrapper__image"
         />
         <div class="container__house-list__house__wrapper__details">
           <p class="container__house-list__house__wrapper__details__street">
-            {{ house.location.street }}
+            {{ listing.location.street }}
           </p>
           <p class="container__house-list__house__wrapper__details__price">
-            &euro; {{ house.price }}
+            &euro; {{ listing.price }}
           </p>
           <p class="container__house-list__house__wrapper__details__zip">
-            {{ house.location.zip }} {{ house.location.city }}
+            {{ listing.location.zip }} {{ listing.location.city }}
           </p>
           <div class="container__house-list__house__wrapper__details__rooms">
             <img
@@ -36,7 +36,7 @@
             <p
               class="container__house-list__house__wrapper__details__rooms__specs"
             >
-              {{ house.rooms.bedrooms }}
+              {{ listing.rooms.bedrooms }}
             </p>
             <img
               class="container__house-list__house__wrapper__details__rooms__image"
@@ -46,7 +46,7 @@
             <p
               class="container__house-list__house__wrapper__details__rooms__specs"
             >
-              {{ house.rooms.bathrooms }}
+              {{ listing.rooms.bathrooms }}
             </p>
             <img
               class="container__house-list__house__wrapper__details__rooms__image"
@@ -56,12 +56,12 @@
             <p
               class="container__house-list__house__wrapper__details__rooms__specs"
             >
-              {{ house.size }}
+              {{ listing.size }}
             </p>
           </div>
         </div>
       </div>
-      <EditDelete v-if="showEdit && house.madeByMe" :selected-listing="house" />
+      <EditDelete v-if="showEdit && listing.madeByMe" :selected-listing="listing" />
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img
@@ -118,7 +118,7 @@ export default {
       },
       set: function () {},
     },
-    availableHouses() {
+    availableListings() {
       if (this.shortList) {
         return this.listings
           .filter((house) => house.id !== this.selectedId)
@@ -147,9 +147,10 @@ export default {
     },
   },
   methods: {
-    setRoute(id) {
-      this.$router.push({ path: `/listing/${id}` })
+    setRoute(listing) {
+      this.$router.push({ path: `/listing/${listing.id}` })
       this.$store.commit("setNavigationActiveItem", "/")
+      this.$store.commit('setSelectedListing', listing)
     },
   },
 }

@@ -49,6 +49,9 @@ export default {
       return this.$store.state.windowWidth
     },
   },
+  mounted() {
+    this.$store.commit("resetListingToPatch")
+  },
   methods: {
     getFilter(value) {
       this.sort = value

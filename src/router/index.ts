@@ -22,6 +22,11 @@ const routes: Array<RouteConfig> = [
     props: (route) => ({ ...route.params }),
   },
   {
+    path: "/edit-listing/:id",
+    name: "edit-listing",
+    component: () => import("../views/NewListing/NewListing.vue"),
+  },
+  {
     path: "/new-listing",
     name: "newListing",
     component: () => import("../views/NewListing/NewListing.vue"),

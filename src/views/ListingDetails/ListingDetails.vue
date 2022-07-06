@@ -115,22 +115,8 @@ export default {
     }
   },
   computed: {
-    listings() {
-      return this.$store.state.listings
-    },
     selectedListing() {
       return this.$store.state.selectedListing
-    },
-  },
-  mounted() {
-    this.findListing()
-  },
-  methods: {
-    findListing() {
-      const listing = this.listings.find(
-        (house) => house.id.toString() === this.$route.params.id
-      )
-      this.$store.commit("setSelectedListing", listing)
     },
   },
 }
