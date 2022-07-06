@@ -216,27 +216,38 @@ export default {
     isPatching() {
       return this.$store.state.patching
     },
+    listingToPatch() {
+      return this.$store.state.listingToPatch
+    },
   },
   mounted() {
-    this.checkIfPatching()
+    this.updateSchema()
   },
   methods: {
-    checkIfPatching() {
+    updateSchema() {
       if (this.isPatching) {
-        const [street, number] =
-          this.$store.state.listingToPatch.location.street.split(" ")
+        this.newListing = {}
+        const [street, number] = this.listingToPatch.location.street.split(" ")
         this.newListing = {
           streetName: street,
           houseNumber: number,
-          city: this.$store.state.listingToPatch.location.city,
-          zip: this.$store.state.listingToPatch.location.zip,
-          ...this.$store.state.listingToPatch,
+          zip: this.listingToPatch.location.zip,
+          city: this.listingToPatch.location.city,
+          image: this.listingToPatch.image,
+          price: this.listingToPatch.price,
+          size: this.listingToPatch.size,
+          hasGarage: this.listingToPatch.hasGarage,
+          bedrooms: this.listingToPatch.rooms.bedrooms,
+          bathrooms: this.listingToPatch.rooms.bathrooms,
+          constructionYear: this.listingToPatch.constructionYear,
+          description: this.listingToPatch.description,
         }
       }
     },
 
     getFile(e) {
       this.files = e.target.files
+      console.log(this.files)
       if (!this.files.length) return
       const reader = new FileReader()
       reader.onload = () => {
@@ -250,6 +261,7 @@ export default {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const data = new FormData()
         data.append("image", file)
+        console.log(data)
         await axios({
           method: "POST",
           url: `https://api.intern.d-tt.nl/api/houses/${id}/upload`,
@@ -272,14 +284,23 @@ export default {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const response = await axios({
           method: "POST",
-          url: "https://api.intern.d-tt.nl/api/houses",
+          url: !this.isPatching
+            ? "https://api.intern.d-tt.nl/api/houses"
+            : `https://api.intern.d-tt.nl/api/houses/${this.listingToPatch.id}`,
           data: this.newListing,
           headers,
         })
         if (!response) console.log("Oops, there was a problem...")
-        await this.uploadImage(this.files[0], response.data.id)
+        if (!this.isPatching) {
+          await this.uploadImage(this.files[0], response.data.id)
+        }
+        // this.$store.commit("setSelectedListing", this.newListing)
         await this.$store.dispatch("getListings")
-        this.$router.push({ path: `/listing/${response.data.id}` })
+        this.$router.push({
+          path: this.isPatching
+            ? `/listing/${this.listingToPatch.id}`
+            : `/listing/${response.data.id}`,
+        })
       } catch (e) {
         console.log(e)
       }
