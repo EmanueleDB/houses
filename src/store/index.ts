@@ -12,7 +12,7 @@ export default new Vuex.Store({
     listings: [],
     selectedListing: {},
     navigationActiveItem: "",
-    // windowWidth: "",
+    windowWidth: "",
     patching: false,
   },
   getters: {},

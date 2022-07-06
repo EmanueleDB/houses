@@ -117,6 +117,9 @@ export default {
 
     @include respond-to("xsm") {
       position: relative;
+      bottom: unset;
+      left: unset;
+      right: unset;
       justify-content: unset;
       margin: 0 10%;
       padding: 10px 0;
