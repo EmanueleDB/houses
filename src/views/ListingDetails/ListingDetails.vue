@@ -114,6 +114,7 @@ export default {
       },
     }
   },
+
   computed: {
     selectedListing() {
       return this.$store.state.selectedListing

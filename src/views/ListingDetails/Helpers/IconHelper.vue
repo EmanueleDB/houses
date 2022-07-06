@@ -30,13 +30,11 @@ export default {
       required: true,
     },
   },
+
   computed: {
     value() {
       return this.$store.state.selectedListing
     },
   },
-  mounted() {
-    console.log(this.value)
-  }
 }
 </script>

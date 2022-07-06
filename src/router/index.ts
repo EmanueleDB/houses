@@ -19,7 +19,6 @@ const routes: Array<RouteConfig> = [
     path: "/listing/:id",
     name: "listingDetails",
     component: () => import("../views/ListingDetails/ListingDetails.vue"),
-    props: (route) => ({ ...route.params }),
   },
   {
     path: "/edit-listing/:id",

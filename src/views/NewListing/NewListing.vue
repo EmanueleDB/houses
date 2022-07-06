@@ -277,9 +277,16 @@ export default {
           headers,
         })
         if (!response) console.log("Oops, there was a problem...")
-        await this.uploadImage(this.files[0], response.data.id)
-        await this.$store.dispatch("getListings")
-        this.$router.push({ path: `/listing/${response.data.id}` })
+        else {
+          await this.uploadImage(this.files[0], response.data.id)
+          await this.$store.dispatch("getListings")
+          const found = this.$store.state.listings.filter(
+            (listing) => listing.id === response.data.id
+          )
+          await this.$store.commit("setSelectedListing", found[0])
+
+          await this.$router.push({ path: `/listing/${response.data.id}` })
+        }
       } catch (e) {
         console.log(e)
       }

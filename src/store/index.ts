@@ -18,14 +18,14 @@ export default new Vuex.Store({
   },
   getters: {},
   mutations: {
-    setListings(state: any, payload: object) {
+    setListings(state: any, payload: []) {;
       state.listings = payload
     },
 
-    setSelectedListing(state: any, payload) {
+    setSelectedListing(state: any, payload: object) {
       state.selectedListing = payload
     },
-    setListingToPatch(state: any, payload) {
+    setListingToPatch(state: any, payload: any) {
       state.listingToPatch = payload
     },
     resetSelectedListing(state: any) {
@@ -34,7 +34,7 @@ export default new Vuex.Store({
     resetListingToPatch(state: any) {
       state.listingToPatch = {}
     },
-    isPatching(state: any, payload) {
+    isPatching(state: any, payload: boolean) {
       state.patching = payload
     },
     setNavigationActiveItem(state: any, payload: string) {
@@ -42,9 +42,6 @@ export default new Vuex.Store({
     },
     setWindowWidth(state: any, payload: number) {
       state.windowWidth = payload
-    },
-    addNewListing(state: any, payload: object) {
-      state.listings.push(payload)
     },
   },
   //I have decided to set the fetch request directly in the store because I would need to access to the list
