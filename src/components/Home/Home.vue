@@ -7,7 +7,10 @@
           <button
             v-if="windowWidth > 768"
             class="container__top__button-container__button"
-            @click="$router.push({ path: '/new-listing' })"
+            @click="
+              $store.commit('isPatching', false)
+              $router.push({ path: '/new-listing' })
+            "
           >
             <img
               class="container__top__button-container__button__icon"

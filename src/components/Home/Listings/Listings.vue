@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      <EditDelete v-if="showEdit && house.madeByMe"/>
+      <EditDelete v-if="showEdit && house.madeByMe" :selected-listing="house" />
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img
@@ -108,22 +108,30 @@ export default {
   },
   data() {
     return {
-      houses: [],
       count: null,
     }
   },
   computed: {
+    listings: {
+      get: function () {
+        return this.$store.state.listings
+      },
+      set: function () {},
+    },
     availableHouses() {
       if (this.shortList) {
-        return this.houses
+        return this.listings
           .filter((house) => house.id !== this.selectedId)
           .splice(0, 3)
       }
       if (this.sortBy === "price")
-        this.houses = this.houses.sort((a, b) => (a.price > b.price ? 1 : -1))
-      else this.houses = this.houses.sort((a, b) => (a.size > b.size ? 1 : -1))
-      if (this.searchQuery === "") return this.houses
-      return this.houses?.filter(
+        this.listings = this.listings.sort((a, b) =>
+          a.price > b.price ? 1 : -1
+        )
+      else
+        this.listings = this.listings.sort((a, b) => (a.size > b.size ? 1 : -1))
+      if (this.searchQuery === "") return this.listings
+      return this.listings?.filter(
         (house) =>
           house.location.street?.includes(this.searchQuery) ||
           house.location.city?.includes(this.searchQuery) ||
@@ -138,27 +146,11 @@ export default {
       if (to) this.count = to.length
     },
   },
-  mounted() {
-    this.getHouses()
-  },
   methods: {
-    async getHouses() {
-      try {
-        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
-        const response = await axios.get(
-          "https://api.intern.d-tt.nl/api/houses",
-          { headers }
-        )
-        this.houses = response.data
-        this.$store.commit("setListings", response.data)
-      } catch (e) {
-        console.log(e)
-      }
-    },
     setRoute(id) {
-      this.$store.commit("setNavigationActiveItem", '/')
       this.$router.push({ path: `/listing/${id}` })
-    }
+      this.$store.commit("setNavigationActiveItem", "/")
+    },
   },
 }
 </script>

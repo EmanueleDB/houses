@@ -21,7 +21,12 @@
       <h1 v-if="selectedListing.location">
         {{ selectedListing.location.street }}
       </h1>
-      <EditDelete v-if="selectedListing.madeByMe" :change-position="true" />
+      <EditDelete
+        v-if="selectedListing.madeByMe"
+        :change-position="true"
+        :selected-listing="selectedListing"
+        :redirect="true"
+      />
     </div>
     <div class="container__infos">
       <img
@@ -48,6 +53,10 @@
 </template>
 
 <script>
+//See comment in the NewListing.vue file
+//I can show the details of the new listing because the body that is needed to send the POST request of the new listing
+// is different from the object of the other houses already present in the API
+
 import Listings from "@/components/Home/Listings/Listings"
 import ImageHelper from "./Helpers/IconHelper"
 import EditDelete from "@/components/Home/Listings/EditDelete"
@@ -106,8 +115,8 @@ export default {
     }
   },
   computed: {
-    getHouses() {
-      return this.$store.state.houses
+    listings() {
+      return this.$store.state.listings
     },
     selectedListing() {
       return this.$store.state.selectedListing
@@ -118,7 +127,7 @@ export default {
   },
   methods: {
     findListing() {
-      const listing = this.getHouses.find(
+      const listing = this.listings.find(
         (house) => house.id.toString() === this.$route.params.id
       )
       this.$store.commit("setSelectedListing", listing)

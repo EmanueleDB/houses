@@ -48,7 +48,19 @@
             background-color: $primary;
             color: $white;
             cursor: pointer;
+          }
 
+          &__error {
+            @include font-montserrat-mediumItalic;
+            font-size: 12px;
+            color: $primary;
+            @include respond-to("md") {
+              font-size: 14px;
+            }
+          }
+          &__preview {
+            width: 150px;
+            height: 120px;
           }
         }
       }

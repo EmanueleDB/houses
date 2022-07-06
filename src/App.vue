@@ -35,6 +35,10 @@ export default {
       this.windowWidth = e.currentTarget.innerWidth
     },
   },
+  //When the app load for the first time, I fetch the listings
+  async mounted() {
+    await this.$store.dispatch('getListings')
+  }
 }
 </script>
 

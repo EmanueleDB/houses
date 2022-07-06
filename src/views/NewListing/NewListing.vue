@@ -7,9 +7,9 @@
         <div class="container__background__new">
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>Street</label>
+              <label>Street name*</label>
               <input
-                v-model="listing.streetName"
+                v-model="newListing.streetName"
                 class="container__background__new__input"
                 type="text"
               />
@@ -17,9 +17,9 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>House number</label>
+              <label>House number*</label>
               <input
-                v-model="listing.houseNumber"
+                v-model="newListing.houseNumber"
                 class="container__background__new__input"
                 style="margin-right: 20px"
                 type="text"
@@ -31,7 +31,7 @@
             >
               <label>Additional (optional)</label>
               <input
-                v-model="listing.numberAddition"
+                v-model="newListing.numberAddition"
                 class="container__background__new__input"
                 type="text"
               />
@@ -39,9 +39,9 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>Postal code</label>
+              <label>Postal code*</label>
               <input
-                v-model="listing.zip"
+                v-model="newListing.zip"
                 class="container__background__new__input"
                 type="text"
               />
@@ -49,22 +49,41 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>City</label>
+              <label>City*</label>
               <input
-                v-model="listing.city"
+                v-model="newListing.city"
                 class="container__background__new__input"
                 type="text"
               />
             </div>
           </div>
           <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Upload picture(PNG or JPG)</label>
-              <label class="container__background__new__row__column__file">
+            <div
+              class="container__background__new__row__column"
+              style="display: flex; flex-direction: column"
+            >
+              <label>Upload picture(PNG or JPG)*</label>
+              <img
+                v-if="isPatching"
+                class="container__background__new__row__column__preview"
+                :src="newListing.image"
+                alt="image"
+              />
+              <img
+                v-else-if="previewImage"
+                class="container__background__new__row__column__preview"
+                :src="previewImage"
+                alt="image"
+              />
+              <label
+                v-else
+                class="container__background__new__row__column__file"
+              >
                 <input
                   type="file"
                   accept="image/jpg, image/png"
-                  @change="uploadImage($event)"
+                  style="display: none"
+                  @change="getFile($event)"
                 />
                 <img
                   class="container__background__new__row__column__file__icon"
@@ -76,9 +95,9 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>Price</label>
+              <label>Price*</label>
               <input
-                v-model="listing.price"
+                v-model="newListing.price"
                 class="container__background__new__input"
                 type="text"
               />
@@ -86,9 +105,9 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>Size</label>
+              <label>Size*</label>
               <input
-                v-model="listing.size"
+                v-model="newListing.size"
                 class="container__background__new__input"
                 style="margin-right: 20px"
                 type="text"
@@ -98,12 +117,11 @@
               class="container__background__new__row__column"
               style="margin-top: 10px"
             >
-              <label>Garage</label>
+              <label>Garage*</label>
               <select
                 name="garage"
                 class="container__background__new__input"
-                v-model="listing.hasGarage"
-                @change="setGarage($event)"
+                v-model="newListing.hasGarage"
               >
                 <option value="true">Yes</option>
                 <option value="false">No</option>
@@ -112,9 +130,9 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>Bedrooms</label>
+              <label>Bedrooms*</label>
               <input
-                v-model="listing.bedrooms"
+                v-model="newListing.bedrooms"
                 class="container__background__new__input"
                 style="margin-right: 20px"
                 type="text"
@@ -124,9 +142,9 @@
               class="container__background__new__row__column"
               style="margin-top: 10px"
             >
-              <label>Bathrooms</label>
+              <label>Bathrooms*</label>
               <input
-                v-model="listing.bathrooms"
+                v-model="newListing.bathrooms"
                 class="container__background__new__input"
                 type="text"
               />
@@ -134,9 +152,9 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>Construction date</label>
+              <label>Construction date*</label>
               <input
-                v-model="listing.constructionYear"
+                v-model="newListing.constructionYear"
                 class="container__background__new__input"
                 type="text"
               />
@@ -144,18 +162,34 @@
           </div>
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
-              <label>Description</label>
+              <label>Description*</label>
               <textarea
-                v-model="listing.description"
+                v-model="newListing.description"
                 class="container__background__new__input"
-                style="width: 100%; height: calc(100% - 30px); margin-bottom: 30px;"
+                style="
+                  width: 100%;
+                  height: calc(100% - 30px);
+                  margin-bottom: 30px;
+                "
               />
             </div>
           </div>
           <div class="container__background__new__row">
-            <div class="container__background__new__row__column"
-            style="display: flex; justify-content: flex-end;">
-              <button class="container__background__new__row__column__button" type="submit">POST</button>
+            <div class="container__background__new__row__column">
+              <span class="container__background__new__row__column__error"
+                >Required field missing</span
+              >
+            </div>
+            <div
+              class="container__background__new__row__column"
+              style="display: flex; justify-content: flex-end"
+            >
+              <button
+                class="container__background__new__row__column__button"
+                type="submit"
+              >
+                POST
+              </button>
             </div>
           </div>
         </div>
@@ -166,20 +200,89 @@
 
 <script>
 import Back from "@/views/ListingDetails/Helpers/Back"
+import axios from "axios"
 export default {
   name: "NewListing",
   components: { Back },
   data() {
     return {
-      listing: {},
+      newListing: {},
+      errors: false,
+      files: {},
+      previewImage: null,
     }
   },
-  methods: {
-    setGarage(e) {
-      console.log(e.target.value, this.listing.garage)
+  computed: {
+    isPatching() {
+      return this.$store.state.patching
     },
-    uploadImage(e) {
-      console.log(e.target.files)
+  },
+  mounted() {
+    this.checkIfPatching()
+  },
+  methods: {
+    checkIfPatching() {
+      if (this.isPatching) {
+        const [street, number] =
+          this.$store.state.selectedListing.location.street.split(" ")
+        this.newListing = {
+          streetName: street,
+          houseNumber: number,
+          city: this.$store.state.selectedListing.location.city,
+          zip: this.$store.state.selectedListing.location.zip,
+          ...this.$store.state.selectedListing,
+        }
+      }
+    },
+
+    getFile(e) {
+      this.files = e.target.files
+      if (!this.files.length) return
+      const reader = new FileReader()
+      reader.onload = () => {
+        this.previewImage = reader.result
+      }
+      reader.readAsDataURL(this.files[0])
+    },
+
+    async uploadImage(file, id) {
+      try {
+        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
+        const data = new FormData()
+        data.append("image", file)
+        await axios({
+          method: "POST",
+          url: `https://api.intern.d-tt.nl/api/houses/${id}/upload`,
+          data,
+          headers,
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    checkErrors() {
+      console.log("xxx")
+    },
+
+    //To add a house I need to perform 2 calls, the first one will post the house and with the id given in its response
+    //I can perform the second call to upload the image
+    async createListing() {
+      try {
+        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
+        const response = await axios({
+          method: "POST",
+          url: "https://api.intern.d-tt.nl/api/houses",
+          data: this.newListing,
+          headers,
+        })
+        if (!response) console.log("Oops, there was a problem...")
+        await this.uploadImage(this.files[0], response.data.id)
+        await this.$store.dispatch("getListings")
+        this.$router.push({ path: `/listing/${response.data.id}` })
+      } catch (e) {
+        console.log(e)
+      }
     },
   },
 }
