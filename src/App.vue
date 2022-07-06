@@ -2,7 +2,7 @@
   <div id="app">
     <Navigation />
     <div class="wrapper">
-      <router-view />
+      <router-view :key="$route.path" />
     </div>
   </div>
 </template>
@@ -25,6 +25,9 @@ export default {
     },
   },
   mounted() {
+    //When the app load for the first time, I fetch the listings
+    this.$store.dispatch("getListings")
+
     window.addEventListener("resize", this.checkScreenSize)
   },
   beforeDestroy() {

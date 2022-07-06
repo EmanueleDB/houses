@@ -1,18 +1,6 @@
 <template>
   <div class="container">
-    <div class="container__back">
-      <img
-        class="container__back__icon"
-        :src="
-          windowWidth > 768
-            ? require(`../../static/images/ic_back_grey@3x.png`)
-            : require(`../../static/images/ic_back_white@3x.png`)
-        "
-        alt="back"
-        @click="$router.push({ path: '/' })"
-      />
-      <p class="container__back__text">Back to overview</p>
-    </div>
+    <Back />
     <div class="container__detail">
       <img
         class="container__detail__image"
@@ -33,7 +21,12 @@
       <h1 v-if="selectedListing.location">
         {{ selectedListing.location.street }}
       </h1>
-      <EditDelete v-if="selectedListing.madeByMe" :change-position="true" />
+      <EditDelete
+        v-if="selectedListing.madeByMe"
+        :change-position="true"
+        :selected-listing="selectedListing"
+        :redirect="true"
+      />
     </div>
     <div class="container__infos">
       <img
@@ -60,14 +53,20 @@
 </template>
 
 <script>
+//See comment in the NewListing.vue file
+//I can show the details of the new listing because the body that is needed to send the POST request of the new listing
+// is different from the object of the other houses already present in the API
+
 import Listings from "@/components/Home/Listings/Listings"
 import ImageHelper from "./Helpers/IconHelper"
 import EditDelete from "@/components/Home/Listings/EditDelete"
 import Section from "./Helpers/Section"
+import Back from "./Helpers/Back"
 
 export default {
   name: "ListingDetails",
   components: {
+    Back,
     Listings,
     ImageHelper,
     Section,
@@ -116,25 +115,8 @@ export default {
     }
   },
   computed: {
-    getHouses() {
-      return this.$store.state.houses
-    },
     selectedListing() {
       return this.$store.state.selectedListing
-    },
-    windowWidth() {
-      return this.$store.state.windowWidth
-    },
-  },
-  mounted() {
-    this.findListing()
-  },
-  methods: {
-    findListing() {
-      const listing = this.getHouses.find(
-        (house) => house.id.toString() === this.$route.params.id
-      )
-      this.$store.commit("setSelectedListing", listing)
     },
   },
 }

@@ -7,32 +7,6 @@
       border-radius: 0;
     }
   }
-  &__back {
-    position: absolute;
-    top: 80px;
-    left: 30px;
-    @include respond-to("md") {
-      position: unset;
-      margin: 3rem 0 2rem 0;
-      grid-column: span 12;
-      display: flex;
-      font-size: 1rem;
-      @include font-montserrat-semiBold;
-    }
-    &__icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-      cursor: pointer;
-    }
-
-    &__text {
-      display: none;
-      @include respond-to("md") {
-        display: unset;
-      }
-    }
-  }
   &__detail {
     display: flex;
     grid-column: span 12;
@@ -71,6 +45,10 @@
     grid-column: span 12;
     width: 90%;
     margin: 0 auto;
+
+    h3 {
+      grid-column: span 12;
+    }
 
     .container__house-list {
       width: 100%;

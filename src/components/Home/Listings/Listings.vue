@@ -4,28 +4,28 @@
       {{ this.count }} results found
     </h3>
     <div
-      v-for="house in availableHouses"
+      v-for="listing in availableListings"
       class="container__house-list__house"
-      :key="house.id"
+      :key="listing.id"
     >
       <div
         class="container__house-list__house__wrapper"
-        @click="setRoute(house.id)"
+        @click="setRoute(listing)"
       >
         <img
-          :src="house.image"
+          :src="listing.image"
           alt="house-image"
           class="container__house-list__house__wrapper__image"
         />
         <div class="container__house-list__house__wrapper__details">
           <p class="container__house-list__house__wrapper__details__street">
-            {{ house.location.street }}
+            {{ listing.location.street }}
           </p>
           <p class="container__house-list__house__wrapper__details__price">
-            &euro; {{ house.price }}
+            &euro; {{ listing.price }}
           </p>
           <p class="container__house-list__house__wrapper__details__zip">
-            {{ house.location.zip }} {{ house.location.city }}
+            {{ listing.location.zip }} {{ listing.location.city }}
           </p>
           <div class="container__house-list__house__wrapper__details__rooms">
             <img
@@ -36,7 +36,7 @@
             <p
               class="container__house-list__house__wrapper__details__rooms__specs"
             >
-              {{ house.rooms.bedrooms }}
+              {{ listing.rooms.bedrooms }}
             </p>
             <img
               class="container__house-list__house__wrapper__details__rooms__image"
@@ -46,7 +46,7 @@
             <p
               class="container__house-list__house__wrapper__details__rooms__specs"
             >
-              {{ house.rooms.bathrooms }}
+              {{ listing.rooms.bathrooms }}
             </p>
             <img
               class="container__house-list__house__wrapper__details__rooms__image"
@@ -56,12 +56,12 @@
             <p
               class="container__house-list__house__wrapper__details__rooms__specs"
             >
-              {{ house.size }}
+              {{ listing.size }}
             </p>
           </div>
         </div>
       </div>
-      <EditDelete v-if="showEdit && house.madeByMe"/>
+      <EditDelete v-if="showEdit && listing.madeByMe" :selected-listing="listing" />
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img
@@ -108,22 +108,30 @@ export default {
   },
   data() {
     return {
-      houses: [],
       count: null,
     }
   },
   computed: {
-    availableHouses() {
+    listings: {
+      get: function () {
+        return this.$store.state.listings
+      },
+      set: function () {},
+    },
+    availableListings() {
       if (this.shortList) {
-        return this.houses
+        return this.listings
           .filter((house) => house.id !== this.selectedId)
           .splice(0, 3)
       }
       if (this.sortBy === "price")
-        this.houses = this.houses.sort((a, b) => (a.price > b.price ? 1 : -1))
-      else this.houses = this.houses.sort((a, b) => (a.size > b.size ? 1 : -1))
-      if (this.searchQuery === "") return this.houses
-      return this.houses?.filter(
+        this.listings = this.listings.sort((a, b) =>
+          a.price > b.price ? 1 : -1
+        )
+      else
+        this.listings = this.listings.sort((a, b) => (a.size > b.size ? 1 : -1))
+      if (this.searchQuery === "") return this.listings
+      return this.listings?.filter(
         (house) =>
           house.location.street?.includes(this.searchQuery) ||
           house.location.city?.includes(this.searchQuery) ||
@@ -138,27 +146,12 @@ export default {
       if (to) this.count = to.length
     },
   },
-  mounted() {
-    this.getHouses()
-  },
   methods: {
-    async getHouses() {
-      try {
-        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
-        const response = await axios.get(
-          "https://api.intern.d-tt.nl/api/houses",
-          { headers }
-        )
-        this.houses = response.data
-        this.$store.commit("setListings", response.data)
-      } catch (e) {
-        console.log(e)
-      }
+    setRoute(listing) {
+      this.$router.push({ path: `/listing/${listing.id}` })
+      this.$store.commit("setNavigationActiveItem", "/")
+      this.$store.commit('setSelectedListing', listing)
     },
-    setRoute(id) {
-      this.$store.commit("setNavigationActiveItem", '/')
-      this.$router.push({ path: `/house/${id}` })
-    }
   },
 }
 </script>
