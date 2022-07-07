@@ -5,8 +5,10 @@
 
     h1 {
       font-size: 22px;
+      text-align: center;
       @include respond-to("md") {
         font-size: 2rem;
+        text-align: left;
       }
     }
 
@@ -16,8 +18,13 @@
     background-image: url("/src/static/images/img_background@3x.png");
     background-size: 100% 100%;
     grid-column: span 12;
+    margin-bottom: 60px;
 
-    h1 {
+    @include respond-to("md") {
+      margin-bottom: unset;
+    }
+
+      h1 {
       font-size: 18px;
       margin: 0 auto;
       text-align: center;

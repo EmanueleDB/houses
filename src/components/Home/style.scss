@@ -1,6 +1,9 @@
 .container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  @include respond-to("md") {
+    margin: 90px 0 1rem 0;
+  }
 
   &__top {
     display: flex;
@@ -10,7 +13,7 @@
 
     @include respond-to("md") {
       justify-content: space-between;
-      margin: 3rem 0 1rem 0;
+      margin: 2rem 0 1rem 0;
     }
 
     h1 {
@@ -37,7 +40,7 @@
           font-size: 18px;
           width: auto;
         }
-          &__icon {
+        &__icon {
           width: 20px;
           position: absolute;
           right: 20px;

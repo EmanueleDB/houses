@@ -45,7 +45,7 @@ export default {
     .wrapper {
 
       @include respond-to("md") {
-        margin: 55px 10% 0 10%;
+        margin: 0 10% 0 10%;
       }
     }
   }

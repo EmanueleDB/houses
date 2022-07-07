@@ -39,7 +39,7 @@ export default {
 
   @include respond-to("md") {
     position: unset;
-    margin: 3rem 0 2rem 0;
+    margin: 2rem 0 1rem 0;
     grid-column: span 12;
     display: flex;
     font-size: 1rem;
