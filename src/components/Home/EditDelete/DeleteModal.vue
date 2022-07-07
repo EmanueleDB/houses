@@ -10,8 +10,12 @@
         </p>
       </div>
       <div class="modal__footer">
-        <button @click="$emit('delete')">YES, DELETE</button>
-        <button @click="$emit('close')">Go, BACK</button>
+        <button class="modal__footer__delete" @click="$emit('delete')">
+          YES, DELETE
+        </button>
+        <button class="modal__footer__back" @click="$emit('close')">
+          GO, BACK
+        </button>
       </div>
     </div>
   </div>
@@ -36,36 +40,76 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, .7);  z-index: 102;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 102;
 }
 
 .modal {
-  height: 250px;
-  width: 500px;
   position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 90%;
+  height: 300px;
   background-color: $white;
   border-radius: 10px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding: 2rem;
-  right: 0;
   margin: auto;
   z-index: 103;
   text-align: center;
+  padding: 10px;
 
-  &__header, &__body {
-    margin-bottom: 2rem;
+  @include respond-to("md") {
+    left: 0;
+    height: 300px;
+    width: 500px;
   }
-
   &__header {
     font-size: 1.5rem;
     @include font-montserrat-semiBold;
+    margin: 1rem 2rem;
+  }
+  &__body {
+    margin: 2rem 4rem;
   }
 
   &__footer {
     display: flex;
     flex-direction: column;
+    margin: 1rem 4rem;
+    align-items: center;
+
+    &__delete {
+      @include font-montserrat-semiBold;
+      width: 250px;
+      padding: 10px;
+      border-radius: 5px;
+      border: unset;
+      text-transform: uppercase;
+      background-color: $primary;
+      color: $white;
+      cursor: pointer;
+      font-size: 12px;
+      margin-bottom: 1rem;
+      @include respond-to("md") {
+        font-size: 18px;
+        width: 400px;
+      }
+    }
+    &__back {
+      @include font-montserrat-semiBold;
+      width: 250px;
+      padding: 10px;
+      border-radius: 5px;
+      border: unset;
+      text-transform: uppercase;
+      background-color: $text-secondary;
+      color: $white;
+      cursor: pointer;
+      font-size: 12px;
+      @include respond-to("md") {
+        font-size: 18px;
+        width: 400px;
+      }
+    }
   }
 }
 </style>
