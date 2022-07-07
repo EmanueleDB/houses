@@ -3,7 +3,7 @@
     <div class="container">
       <div class="container__background">
         <Back />
-        <h1>Create new listing</h1>
+        <h1>{{ isPatching ? "Edit listing" : "Create new listing" }}</h1>
         <div class="container__background__new">
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
@@ -188,7 +188,7 @@
                 class="container__background__new__row__column__button"
                 type="submit"
               >
-                POST
+                {{ isPatching ? "SAVE" : "POST" }}
               </button>
             </div>
           </div>
@@ -216,22 +216,32 @@ export default {
     isPatching() {
       return this.$store.state.patching
     },
+    listingToPatch() {
+      return this.$store.state.listingToPatch
+    },
   },
   mounted() {
-    this.checkIfPatching()
+    if (this.isPatching) this.checkIfPatching()
   },
   methods: {
     checkIfPatching() {
-      if (this.isPatching) {
-        const [street, number] =
-          this.$store.state.listingToPatch.location.street.split(" ")
-        this.newListing = {
-          streetName: street,
-          houseNumber: number,
-          city: this.$store.state.listingToPatch.location.city,
-          zip: this.$store.state.listingToPatch.location.zip,
-          ...this.$store.state.listingToPatch,
-        }
+      console.log(this.listingToPatch)
+      const [street, number] = this.listingToPatch.location.street.split(" ")
+      this.newListing = {
+        streetName: street,
+        houseNumber: number,
+        price: this.listingToPatch.price,
+        bedrooms: this.listingToPatch.rooms.bedrooms,
+        bathrooms: this.listingToPatch.rooms.bathrooms,
+        size: this.listingToPatch.size,
+        streetName: street,
+        houseNumber: number,
+        zip: this.listingToPatch.location.zip,
+        city: this.listingToPatch.location.city,
+        constructionYear: this.listingToPatch.constructionYear,
+        hasGarage: this.listingToPatch.hasGarage,
+        description: this.listingToPatch.description,
+        image: this.listingToPatch.image,
       }
     },
 
@@ -272,19 +282,26 @@ export default {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const response = await axios({
           method: "POST",
-          url: "https://api.intern.d-tt.nl/api/houses",
+          url: this.isPatching
+            ? `https://api.intern.d-tt.nl/api/houses/${this.listingToPatch.id}`
+            : "https://api.intern.d-tt.nl/api/houses",
           data: this.newListing,
           headers,
         })
         if (!response) console.log("Oops, there was a problem...")
-        else {
+        else if (this.isPatching) {
+          await this.$store.commit("setSelectedListing", this.listingToPatch)
+          await this.$store.dispatch("getListings")
+          await this.$router.push({
+            path: `/`,
+          })
+        } else {
           await this.uploadImage(this.files[0], response.data.id)
           await this.$store.dispatch("getListings")
           const found = this.$store.state.listings.filter(
             (listing) => listing.id === response.data.id
           )
           await this.$store.commit("setSelectedListing", found[0])
-
           await this.$router.push({ path: `/listing/${response.data.id}` })
         }
       } catch (e) {
