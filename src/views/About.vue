@@ -54,7 +54,6 @@
 
     p {
       @include font-montserrat-regular;
-      font-size: 12px;
       line-height: 1.6;
     }
 

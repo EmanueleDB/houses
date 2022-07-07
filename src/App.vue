@@ -42,7 +42,7 @@ export default {
 
 <style lang="scss">
 #app {
-    .wrapper {
+  .wrapper {
 
       @include respond-to("md") {
         margin: 0 10% 0 10%;
