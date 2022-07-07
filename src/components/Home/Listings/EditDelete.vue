@@ -79,6 +79,8 @@ export default {
 <style lang="scss">
 .edit {
   display: flex;
+  position: absolute;
+  right: 0;
 
   &__icon {
     width: 20px;
@@ -89,7 +91,7 @@ export default {
 
   &__top {
     position: absolute;
-    top: 80px;
+    top: 20px;
     right: 30px;
 
     @include respond-to("md") {

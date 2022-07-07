@@ -19,6 +19,16 @@
             />
             create new
           </button>
+          <img
+            v-else
+            class="container__top__button-container__button__icon"
+            src="../../static/images/ic_plus_grey@3x.png"
+            alt="plus-icon"
+            @click="
+              $store.commit('isPatching', false)
+              $router.push({ path: '/new-listing' })
+            "
+          />
         </div>
       </div>
       <Search @sort="getFilter" @searchQuery="getInput" />
@@ -48,9 +58,6 @@ export default {
     windowWidth() {
       return this.$store.state.windowWidth
     },
-  },
-  mounted() {
-    this.$store.commit("resetListingToPatch")
   },
   methods: {
     getFilter(value) {

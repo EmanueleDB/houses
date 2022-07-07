@@ -16,7 +16,7 @@ export default {
   },
   data() {
     return {
-      windowWidth: "",
+      windowWidth: window.innerWidth,
     }
   },
   watch: {
@@ -27,7 +27,6 @@ export default {
   mounted() {
     //When the app load for the first time, I fetch the listings
     this.$store.dispatch("getListings")
-
     window.addEventListener("resize", this.checkScreenSize)
   },
   beforeDestroy() {
@@ -47,7 +46,7 @@ export default {
     margin: 0;
 
     @include respond-to("md") {
-      margin: 0 10% 0 10%;
+      margin: 55px 10% 0 10%;
     }
   }
 }

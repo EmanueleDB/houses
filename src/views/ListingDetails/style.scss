@@ -12,11 +12,13 @@
     grid-column: span 12;
     margin: 0;
     justify-content: center;
+    height: 300px;
+    width: 100%;
 
     @include respond-to("md") {
       grid-column: span 7;
       justify-content: unset;
-      width: 100%;
+      height: unset;
     }
 
     &__image {

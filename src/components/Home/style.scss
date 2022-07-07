@@ -33,8 +33,15 @@
         color: $white;
         cursor: pointer;
         &__icon {
-          width: 11px;
-          margin-right: 5px;
+          width: 20px;
+          position: absolute;
+          right: 20px;
+          top: 20px;
+          @include respond-to("md") {
+            position: unset;
+            width: 11px;
+            margin-right: 5px;
+          }
         }
       }
     }

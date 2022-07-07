@@ -1,53 +1,60 @@
 <template>
-  <nav class="navigation">
-    <div v-if="windowWidth > 420" class="navigation__container">
-      <img
-        class="navigation__container__image"
-        src="../static/images/img_logo_dtt@3x.png"
-        alt="logo"
-        @click="
-          $router.push('/').catch(() => {})
-          setActiveBtn('/')
-        "
-      />
-      <ul v-for="item in navItems" :key="item.id">
-        <span @click="setActiveBtn(item.url)">
-          <router-link
-            :class="[
-              'navigation__container__item',
-              { 'router-link-exact-active': activeBtn === item.url },
-            ]"
-            :to="item.url"
-            >{{ item.name }}</router-link
-          ></span
-        >
-      </ul>
-    </div>
-    <div v-else class="navigation__container">
-      <div
-        style="width: 50%; text-align: center"
-        v-for="item in navItems"
-        :key="item.id"
-      >
-        <router-link class="navigation__container__item" :to="item.url">
-          <div
-            class="navigation__container__item__wrapper"
-            @click="setActiveBtn(item.url)"
+  <div class="navigation-container">
+    <nav v-if="windowWidth > 421" class="navigation-container__navigation">
+      <div class="navigation-container__navigation__container">
+        <img
+          class="navigation-container__navigation__container__image"
+          src="../static/images/img_logo_dtt@3x.png"
+          alt="logo"
+          @click="
+            $router.push('/').catch(() => {})
+            setActiveBtn('/')
+          "
+        />
+        <ul v-for="item in navItems" :key="item.id">
+          <span @click="setActiveBtn(item.url)">
+            <router-link
+              :class="[
+                'navigation-container__navigation__container__item',
+                { 'router-link-exact-active': activeBtn === item.url },
+              ]"
+              :to="item.url"
+              >{{ item.name }}</router-link
+            ></span
           >
-            <img
-              class="navigation__container__item__wrapper__image"
-              :src="
-                activeBtn === item.url
-                  ? require(`../static/images/${item.icon.active}`)
-                  : require(`../static/images/${item.icon.default}`)
-              "
-              alt="logo"
-            />
-          </div>
-        </router-link>
+        </ul>
       </div>
-    </div>
-  </nav>
+    </nav>
+    <nav v-else class="navigation-container__navigation">
+      <div class="navigation-container__navigation__container">
+        <div
+          style="width: 50%; text-align: center"
+          v-for="item in navItems"
+          :key="item.id"
+        >
+          <router-link
+            class="navigation-container__navigation__container__item"
+            :to="item.url"
+          >
+            <div
+              class="navigation-container__navigation__container__item__wrapper"
+              @click="setActiveBtn(item.url)"
+            >
+              <img
+                class="navigation-container__navigation__container__item__wrapper__image"
+                :src="
+                  activeBtn === item.url
+                    ? require(`../static/images/${item.icon.active}`)
+                    : require(`../static/images/${item.icon.default}`)
+                "
+                alt="logo"
+              />
+            </div>
+          </router-link>
+        </div>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -82,6 +89,9 @@ export default {
     activeBtn(to) {
       this.setActiveBtn(to)
     },
+    windowWidth(to) {
+      console.log(to)
+    },
   },
   computed: {
     activeBtn() {
@@ -100,56 +110,60 @@ export default {
 </script>
 
 <style lang="scss">
-.navigation {
-  display: flex;
-  background-color: $white;
+.navigation-container {
+  position: fixed;
+  right: 0;
+  z-index: 100;
+  bottom: 0;
+  height: 55px;
+  width: 100%;
+  @include respond-to("xsm") {
+    top: 0;
+    bottom: unset;
+    height: unset;
+    left: 10%;
+  }
 
-  &__container {
+  &__navigation {
     display: flex;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 55px;
     background-color: $white;
+    height: 55px;
 
-    @include respond-to("xsm") {
-      position: relative;
-      bottom: unset;
-      left: unset;
-      right: unset;
-      justify-content: unset;
-      margin: 0 10%;
-      padding: 10px 0;
-    }
+    &__container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      background-color: $white;
 
-    &__image {
-      height: 45px;
-      margin-right: 20px;
-    }
+      @include respond-to("xsm") {
+        padding: 10px 0;
+      }
 
-    &__item {
-      color: $tertiary;
-      @include font-montserrat-regular;
-      font-size: 18px;
-      text-decoration: unset;
-      padding: 10px;
-      margin-right: 20px;
-      cursor: pointer;
+      &__image {
+        height: 45px;
+        margin-right: 20px;
+      }
 
-      &__wrapper {
-        &__image {
-          width: 30px;
-          height: 30px;
+      &__item {
+        @include respond-to("xsm") {
+          text-decoration: unset;
+          cursor: pointer;
+          color: $tertiary;
+          @include font-montserrat-regular;
+          font-size: 18px;
+        }
+        &__wrapper {
+          &__image {
+            width: 30px;
+            height: 30px;
+          }
         }
       }
-    }
-    .router-link-exact-active {
-      @include font-montserrat-bold;
-      color: $text-primary;
-      cursor: default;
+      .router-link-exact-active {
+        @include font-montserrat-bold;
+        color: $text-primary;
+        cursor: default;
+      }
     }
   }
 }

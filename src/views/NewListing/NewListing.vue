@@ -1,9 +1,11 @@
 <template>
   <form @submit.prevent="createListing()">
     <div class="container">
+      <div class="container__title">
+        <Back :change-style="true" />
+        <h1 style="margin-top: 1rem">{{ isPatching ? "Edit listing" : "Create new listing" }}</h1>
+      </div>
       <div class="container__background">
-        <Back />
-        <h1>{{ isPatching ? "Edit listing" : "Create new listing" }}</h1>
         <div class="container__background__new">
           <div class="container__background__new__row">
             <div class="container__background__new__row__column">
@@ -225,7 +227,6 @@ export default {
   },
   methods: {
     checkIfPatching() {
-      console.log(this.listingToPatch)
       const [street, number] = this.listingToPatch.location.street.split(" ")
       this.newListing = {
         streetName: street,
@@ -288,8 +289,7 @@ export default {
           data: this.newListing,
           headers,
         })
-        if (!response) console.log("Oops, there was a problem...")
-        else if (this.isPatching) {
+        if (this.isPatching) {
           await this.$store.commit("setSelectedListing", this.listingToPatch)
           await this.$store.dispatch("getListings")
           await this.$router.push({
