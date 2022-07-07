@@ -120,7 +120,6 @@ export default {
     top: 0;
     bottom: unset;
     height: unset;
-    left: 10%;
     padding: 10px;
   }
 
@@ -128,6 +127,7 @@ export default {
     display: flex;
     height: 55px;
     @include respond-to("md") {
+      margin: 0 10%;
       height: 70px;
     }
 

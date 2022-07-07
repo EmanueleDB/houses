@@ -46,7 +46,6 @@ export default {
 
 .modal {
   position: absolute;
-  bottom: 0;
   right: 0;
   width: 90%;
   height: 300px;
