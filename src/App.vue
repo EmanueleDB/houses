@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Navigation />
-    <div class="wrapper">
-      <router-view :key="$route.path" />
+      <Navigation />
+      <div class="wrapper">
+        <router-view :key="$route.path" />
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -42,12 +42,12 @@ export default {
 
 <style lang="scss">
 #app {
-  .wrapper {
-    margin: 0;
+    .wrapper {
 
-    @include respond-to("md") {
-      margin: 55px 10% 0 10%;
+      @include respond-to("md") {
+        margin: 55px 10% 0 10%;
+      }
     }
   }
-}
+
 </style>

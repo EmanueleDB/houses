@@ -82,7 +82,7 @@
 
 <script>
 import axios from "axios"
-import EditDelete from "./EditDelete"
+import EditDelete from "../EditDelete/EditDelete"
 
 export default {
   name: "Listings",

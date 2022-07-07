@@ -4,14 +4,13 @@
     flex-direction: column;
     grid-column: span 12;
     width: 90%;
-    //margin: 0 auto 55px auto;
 
     @include respond-to("md") {
       width: 100%;
-      //margin: 0;
     }
 
     &__house {
+      width: 100%;
       display: flex;
       justify-content: space-between;
       flex-direction: row;
@@ -34,7 +33,6 @@
           height: 150px;
 
           &__image {
-
             border-radius: 5px;
             margin-right: 2rem;
 

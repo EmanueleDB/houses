@@ -1,24 +1,31 @@
 <template>
-  <div :class="['edit', { edit__top: changePosition }]">
-    <img
-      class="edit__icon"
-      :src="
-        changePosition && windowWidth < 768
-          ? require(`../../../static/images/ic_edit_white@3x.png`)
-          : require(`../../../static/images/ic_edit@3x.png`)
-      "
-      alt="edit"
-      @click="editListing(selectedListing)"
-    />
-    <img
-      class="edit__icon"
-      :src="
-        changePosition && windowWidth < 768
-          ? require(`../../../static/images/ic_delete_white@3x.png`)
-          : require(`../../../static/images/ic_delete@3x.png`)
-      "
-      alt="delete"
-      @click="deleteListing(selectedListing.id)"
+  <div>
+    <div :class="['edit', { edit__top: changePosition }]">
+      <img
+        class="edit__icon"
+        :src="
+          changePosition && windowWidth < 768
+            ? require(`@/static/images/ic_edit_white@3x.png`)
+            : require(`@/static/images/ic_edit@3x.png`)
+        "
+        alt="edit"
+        @click="editListing(selectedListing)"
+      />
+      <img
+        class="edit__icon"
+        :src="
+          changePosition && windowWidth < 768
+            ? require(`@/static/images/ic_delete_white@3x.png`)
+            : require(`@/static/images/ic_delete@3x.png`)
+        "
+        alt="delete"
+        @click="showModal = true"
+      />
+    </div>
+    <DeleteModal
+      :show-modal="showModal"
+      @close="showModal = false"
+      @delete="deleteListing(selectedListing.id)"
     />
   </div>
 </template>
@@ -26,9 +33,18 @@
 //The edit and delete icons are in multiple places but they not always shown (like in the reccomended column)
 //With some conditions (by props) I'm able to decide where I want them and when they have to be visible
 import axios from "axios"
+import DeleteModal from "./DeleteModal"
 
 export default {
   name: "EditDelete",
+  components: {
+    DeleteModal,
+  },
+  data() {
+    return {
+      showModal: false,
+    }
+  },
   props: {
     changePosition: {
       type: Boolean,
@@ -43,8 +59,16 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {}
+  watch: {
+    showModal(to) {
+      if (to) {
+        document.querySelector("body").style.height = "100%"
+        document.querySelector("body").style.overflow = "hidden"
+      } else {
+        document.querySelector("body").style.height = "unset"
+        document.querySelector("body").style.overflow = "unset"
+      }
+    },
   },
   computed: {
     windowWidth() {
@@ -63,6 +87,7 @@ export default {
         if (!response) console.log("Oops, there was a problem...")
         await this.$store.dispatch("getListings")
         if (this.redirect) this.$router.push({ path: `/` })
+        this.showModal = false
       } catch (e) {
         console.log(e)
       }

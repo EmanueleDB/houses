@@ -32,7 +32,12 @@
         background-color: $primary;
         color: $white;
         cursor: pointer;
-        &__icon {
+        font-size: 12px;
+        @include respond-to("md") {
+          font-size: 18px;
+          width: auto;
+        }
+          &__icon {
           width: 20px;
           position: absolute;
           right: 20px;

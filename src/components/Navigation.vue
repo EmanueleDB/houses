@@ -1,6 +1,6 @@
 <template>
   <div class="navigation-container">
-    <nav v-if="windowWidth > 421" class="navigation-container__navigation">
+    <nav v-if="windowWidth > 576" class="navigation-container__navigation">
       <div class="navigation-container__navigation__container">
         <img
           class="navigation-container__navigation__container__image"
@@ -89,9 +89,6 @@ export default {
     activeBtn(to) {
       this.setActiveBtn(to)
     },
-    windowWidth(to) {
-      console.log(to)
-    },
   },
   computed: {
     activeBtn() {
@@ -116,26 +113,31 @@ export default {
   z-index: 100;
   bottom: 0;
   height: 55px;
+  background-color: $white;
+
   width: 100%;
-  @include respond-to("xsm") {
+  @include respond-to("md") {
     top: 0;
     bottom: unset;
     height: unset;
     left: 10%;
+    padding: 10px;
   }
 
   &__navigation {
     display: flex;
-    background-color: $white;
     height: 55px;
+    @include respond-to("md") {
+      height: 70px;
+    }
 
-    &__container {
+      &__container {
       display: flex;
       align-items: center;
       width: 100%;
       background-color: $white;
 
-      @include respond-to("xsm") {
+      @include respond-to("md") {
         padding: 10px 0;
       }
 
@@ -145,7 +147,7 @@ export default {
       }
 
       &__item {
-        @include respond-to("xsm") {
+        @include respond-to("md") {
           text-decoration: unset;
           cursor: pointer;
           color: $tertiary;

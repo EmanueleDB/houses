@@ -5,7 +5,7 @@
     grid-column: span 12;
     flex-direction: column;
     align-items: center;
-    width:100%;
+    width: 90%;
     margin: 0 auto 2rem auto;
     padding: 10px;
 
@@ -21,8 +21,8 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      left: 95%;
-      top: 12%;
+      right: 30px;
+      top: 17px;
       cursor: pointer;
 
       @include respond-to("md") {
@@ -35,8 +35,8 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      top: 20%;
-      left: 20px;
+      top: 30px;
+      left: 30px;
       transform: translate(-50%, -50%);
       color: $tertiary;
 

@@ -59,7 +59,7 @@
 
 import Listings from "@/components/Home/Listings/Listings"
 import ImageHelper from "./Helpers/IconHelper"
-import EditDelete from "@/components/Home/Listings/EditDelete"
+import EditDelete from "@/components/Home/EditDelete/EditDelete"
 import Section from "./Helpers/Section"
 import Back from "./Helpers/Back"
 
