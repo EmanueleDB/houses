@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   @include respond-to("md") {
-    margin: 90px 0 1rem 0;
+    margin: 90px 10% 1rem 10%;
   }
 
   &__top {

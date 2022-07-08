@@ -18,7 +18,8 @@
     @include respond-to("md") {
       grid-column: span 7;
       justify-content: unset;
-      height: unset;
+      height: 550px;
+      margin: auto;
     }
 
     &__image {
@@ -47,20 +48,25 @@
     grid-column: span 12;
     width: 90%;
     margin: 0 auto;
+    @include respond-to("md") {
+      height: 550px;
+    }
 
-    h3 {
+      h3 {
       grid-column: span 12;
     }
 
     .container__house-list {
       width: 100%;
+      &__house {
+        @include respond-to("md") {
+          margin-bottom: 1rem;
+        }
+      }
     }
 
     @include respond-to("md") {
       order: unset;
-    }
-
-    @include respond-to("md") {
       margin: 1rem 0;
       grid-column: span 4;
       display: grid;

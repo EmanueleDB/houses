@@ -1,3 +1,15 @@
+.form {
+  display: table;
+
+  &__row {
+    display: table-row;
+
+    &__col {
+      display: table-cell;
+    }
+  }
+}
+
 .container {
   &__title {
     grid-column: span 12;
@@ -46,6 +58,23 @@
       &__row {
         display: flex;
         margin: 0 1rem 10px 1rem;
+
+        @include respond-to("md") {
+          margin: 0;
+        }
+
+        &__double-column {
+          @include respond-to("md") {
+            width: 50%;
+          }
+
+          &__input {
+            border: unset;
+            border-radius: 5px;
+            padding: 5px;
+            background-color: $tertiary-light;
+          }
+        }
 
         &__column {
           width: 100%;
@@ -113,6 +142,14 @@
         }
       }
 
+      &__select {
+        border: unset;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #e8e8e8;
+        width: 97%;
+      }
+
       &__input {
         width: calc(100% - 1rem);
         border: unset;
@@ -125,6 +162,18 @@
         @include respond-to("md") {
           display: block;
           width: 200px;
+        }
+      }
+
+      &__text-area {
+        width: 97%;
+        height: 50px;
+        border: unset;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: $tertiary-light;
+
+        @include respond-to("md") {
         }
       }
     }
