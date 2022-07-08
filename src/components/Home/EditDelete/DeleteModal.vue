@@ -47,6 +47,8 @@ export default {
 .modal {
   position: absolute;
   right: 0;
+  left: 0;
+  top: 0;
   width: 90%;
   height: 300px;
   background-color: $white;
@@ -55,11 +57,12 @@ export default {
   z-index: 103;
   text-align: center;
   padding: 10px;
+  bottom: 0;
 
   @include respond-to("md") {
-    left: 0;
     height: 300px;
     width: 500px;
+    top: unset;
   }
   &__header {
     font-size: 1.5rem;

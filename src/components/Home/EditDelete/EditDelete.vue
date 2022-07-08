@@ -85,9 +85,9 @@ export default {
           headers,
         })
         if (!response) console.log("Oops, there was a problem...")
+        this.showModal = false
         await this.$store.dispatch("getListings")
         if (this.redirect) this.$router.push({ path: `/` })
-        this.showModal = false
       } catch (e) {
         console.log(e)
       }
