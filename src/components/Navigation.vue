@@ -138,7 +138,7 @@ export default {
       background-color: $white;
 
       @include respond-to("md") {
-        padding: 10px 0;
+        padding: 10px;
       }
 
       &__image {
