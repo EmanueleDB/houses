@@ -49,16 +49,14 @@
         }
         &__details {
           padding: 10px;
+          font-size: 18px;
 
           &__street {
             @include font-montserrat-bold;
-            font-size: 16px;
             margin-bottom: 5px;
           }
           &__price,
           &__zip {
-            @include font-montserrat-regular;
-            font-size: 14px;
             margin: 10px 0;
           }
           &__zip {
@@ -75,8 +73,6 @@
             }
 
             &__specs {
-              @include font-montserrat-regular;
-              font-size: 14px;
               color: $tertiary;
               margin-right: 10px;
             }

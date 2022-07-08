@@ -5,7 +5,7 @@
       :src="require(`../../../static/images/${url}`)"
       :alt="alt"
     />
-    <p>{{ subProperty ? value[property][subProperty] : value[property] }}</p>
+    <p>{{ setValue }}</p>
   </div>
 </template>
 
@@ -34,6 +34,13 @@ export default {
   computed: {
     value() {
       return this.$store.state.selectedListing
+    },
+    setValue() {
+      if (this.subProperty) return this.value[this.property][this.subProperty]
+      else if (this.property === "hasGarage") {
+        return this.value[this.property] === true ? "Yes" : "No"
+      }
+      return this.value[this.property]
     },
   },
 }

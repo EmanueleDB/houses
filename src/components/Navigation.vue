@@ -148,12 +148,13 @@ export default {
 
       &__item {
         @include respond-to("md") {
+          @include font-montserrat-medium;
           text-decoration: unset;
           cursor: pointer;
           color: $tertiary;
-          @include font-montserrat-regular;
           font-size: 18px;
         }
+
         &__wrapper {
           &__image {
             width: 30px;
@@ -163,6 +164,7 @@ export default {
       }
       .router-link-exact-active {
         @include font-montserrat-bold;
+        font-size: 18px;
         color: $text-primary;
         cursor: default;
       }

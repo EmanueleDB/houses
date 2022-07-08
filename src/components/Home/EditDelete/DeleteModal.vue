@@ -80,7 +80,7 @@ export default {
     align-items: center;
 
     &__delete {
-      @include font-montserrat-semiBold;
+      @include font-montserrat-bold;
       width: 250px;
       padding: 10px;
       border-radius: 5px;
@@ -97,7 +97,7 @@ export default {
       }
     }
     &__back {
-      @include font-montserrat-semiBold;
+      @include font-montserrat-bold;
       width: 250px;
       padding: 10px;
       border-radius: 5px;

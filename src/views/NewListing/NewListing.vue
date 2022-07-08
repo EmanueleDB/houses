@@ -1,164 +1,172 @@
 <template>
   <form @submit.prevent="createListing()">
-    <div class="container">
-      <div class="container__title">
-        <Back :change-style="true" />
-        <h1 style="margin-top: 1rem">
-          {{ isPatching ? "Edit listing" : "Create new listing" }}
-        </h1>
-      </div>
+    <div class="background">
+      <div class="gradient">
+        <div class="container">
+          <div class="container__title">
+            <Back :change-style="true" />
+            <h1 style="margin-top: 1rem">
+              {{ isPatching ? "Edit listing" : "Create new listing" }}
+            </h1>
+          </div>
 
-      <div class="form">
-        <div class="form__box">
-          <div class="form__box__inputs">
-            <label class="form__box__inputs__label">Street name*</label>
-            <input
-              v-model="newListing.streetName"
-              class="form__box__inputs__input"
-              type="text"
-              placeholder="Enter the street name"
-            />
-          </div>
-          <div class="form__box__inputs__double">
-            <label class="form__box__inputs__label">House number*</label>
-            <input
-              v-model="newListing.houseNumber"
-              class="form__box__inputs__input"
-              type="number"
-              placeholder="Enter house number"
-            />
-          </div>
-          <div class="form__box__inputs__double">
-            <label class="form__box__inputs__label"
-              >Additional (optional)*</label
-            >
-            <input
-              v-model="newListing.numberAddition"
-              class="form__box__inputs__input"
-              type="number"
-              placeholder="e.g. A"
-            />
-          </div>
-          <div class="form__box__inputs">
-            <label class="form__box__inputs__label">Postal code*</label>
-            <input
-              v-model="newListing.zip"
-              class="form__box__inputs__input"
-              type="text"
-              placeholder="e.g. 1000 AA"
-            />
-          </div>
-          <div class="form__box__inputs">
-            <label class="form__box__inputs__label">City*</label>
-            <input
-              v-model="newListing.city"
-              class="form__box__inputs__input"
-              type="text"
-              placeholder="e.g. Utrecht"
-            />
-          </div>
-          <div class="form__box__inputs">
-            <label class="form__box__inputs__label"
-              >Upload picture(PNG or JPG)*</label
-            >
-            <img
-              v-if="isPatching"
-              class="form__box__inputs__preview"
-              :src="newListing.image"
-              alt="image"
-            />
-            <img
-              v-else-if="previewImage"
-              class="form__box__inputs__preview"
-              :src="previewImage"
-              alt="image"
-            />
-            <label v-else class="form__box__inputs__file">
-              <input
-                type="file"
-                accept="image/jpg, image/png"
-                style="display: none"
-                @change="getFile($event)"
-              />
-              <img
-                class="form__box__inputs__file__icon"
-                src="../../static/images/ic_upload@3x.png"
-                alt="upload-icon"
-              />
-            </label>
-          </div>
-          <div class="form__box__inputs">
-            <label class="form__box__inputs__label">Price*</label>
-            <input
-              v-model="newListing.price"
-              class="form__box__inputs__input"
-              type="number"
-              placeholder="e.g. € 150000"
-            />
-          </div>
-          <div class="form__box__inputs__double">
-            <label class="form__box__inputs__label">Size*</label>
-            <input
-              v-model="newListing.size"
-              class="form__box__inputs__input"
-              type="text"
-              placeholder="e.g. 60mq"
-            />
-          </div>
-          <div class="form__box__inputs__double" style="width: 50%">
-            <label class="form__box__inputs__label">Garage*</label>
-            <select
-              name="garage"
-              class="form__box__inputs__select"
-              style="width: 100%"
-              v-model="newListing.hasGarage"
-            >
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-          </div>
-          <div class="form__box__inputs__double">
-            <label class="form__box__inputs__label">Bedrooms*</label>
-            <input
-              v-model="newListing.bedrooms"
-              class="form__box__inputs__input"
-              type="number"
-              placeholder="Enter amount"
-            />
-          </div>
-          <div class="form__box__inputs__double">
-            <label class="form__box__inputs__label">Bathrooms*</label>
-            <input
-              v-model="newListing.bathrooms"
-              class="form__box__inputs__input"
-              type="number"
-              placeholder="Enter amount"
-            />
-          </div>
-          <div class="form__box__inputs">
-            <label class="form__box__inputs__label">Construction date*</label>
-            <input
-              v-model="newListing.constructionYear"
-              class="form__box__inputs__input"
-              type="text"
-              placeholder="e.g 1980"
-            />
-          </div>
-          <div class="form__box__inputs">
-            <label class="form__box__inputs__label">Description*</label>
-            <div class="form__box__inputs__text-area-wrapper">
-              <textarea
-                v-model="newListing.description"
-                class="form__box__inputs__text-area-wrapper__textarea"
-                placeholder="Enter description"
-              />
+          <div class="form">
+            <div class="form__box">
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Street name*</label>
+                <input
+                  v-model="newListing.streetName"
+                  class="form__box__inputs__input"
+                  type="text"
+                  placeholder="Enter the street name"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">House number*</label>
+                <input
+                  v-model="newListing.houseNumber"
+                  class="form__box__inputs__input"
+                  type="number"
+                  placeholder="Enter house number"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label"
+                  >Additional (optional)*</label
+                >
+                <input
+                  v-model="newListing.numberAddition"
+                  class="form__box__inputs__input"
+                  type="number"
+                  placeholder="e.g. A"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Postal code*</label>
+                <input
+                  v-model="newListing.zip"
+                  class="form__box__inputs__input"
+                  type="text"
+                  placeholder="e.g. 1000 AA"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">City*</label>
+                <input
+                  v-model="newListing.city"
+                  class="form__box__inputs__input"
+                  type="text"
+                  placeholder="e.g. Utrecht"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label"
+                  >Upload picture(PNG or JPG)*</label
+                >
+                <img
+                  v-if="isPatching"
+                  class="form__box__inputs__preview"
+                  :src="newListing.image"
+                  alt="image"
+                />
+                <img
+                  v-else-if="previewImage"
+                  class="form__box__inputs__preview"
+                  :src="previewImage"
+                  alt="image"
+                />
+                <label v-else class="form__box__inputs__file">
+                  <input
+                    type="file"
+                    accept="image/jpg, image/png"
+                    style="display: none"
+                    @change="getFile($event)"
+                  />
+                  <img
+                    class="form__box__inputs__file__icon"
+                    src="../../static/images/ic_upload@3x.png"
+                    alt="upload-icon"
+                  />
+                </label>
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Price*</label>
+                <input
+                  v-model="newListing.price"
+                  class="form__box__inputs__input"
+                  type="number"
+                  placeholder="e.g. € 150000"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">Size*</label>
+                <input
+                  v-model="newListing.size"
+                  class="form__box__inputs__input"
+                  type="text"
+                  placeholder="e.g. 60mq"
+                />
+              </div>
+              <div class="form__box__inputs__double" style="width: 50%">
+                <label class="form__box__inputs__label">Garage*</label>
+                <select
+                  name="garage"
+                  class="form__box__inputs__select"
+                  style="width: 100%"
+                  v-model="newListing.hasGarage"
+                >
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">Bedrooms*</label>
+                <input
+                  v-model="newListing.bedrooms"
+                  class="form__box__inputs__input"
+                  type="number"
+                  placeholder="Enter amount"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">Bathrooms*</label>
+                <input
+                  v-model="newListing.bathrooms"
+                  class="form__box__inputs__input"
+                  type="number"
+                  placeholder="Enter amount"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label"
+                  >Construction date*</label
+                >
+                <input
+                  v-model="newListing.constructionYear"
+                  class="form__box__inputs__input"
+                  type="text"
+                  placeholder="e.g 1980"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Description*</label>
+                <div class="form__box__inputs__text-area-wrapper">
+                  <textarea
+                    v-model="newListing.description"
+                    class="form__box__inputs__text-area-wrapper__textarea"
+                    placeholder="Enter description"
+                  />
+                </div>
+              </div>
+              <span class="form__box__error-message"
+                >Required field missing</span
+              >
+              <div class="form__box__inputs">
+                <button class="form__box__inputs__button" type="submit">
+                  {{ isPatching ? "SAVE" : "POST" }}
+                </button>
+              </div>
             </div>
-          </div>
-          <span class="form__box__error-message">Required field missing</span>
-          <div class="form__box__inputs">
-            <button class="form__box__inputs__button" type="submit">
-              {{ isPatching ? "SAVE" : "POST" }}
-            </button>
           </div>
         </div>
       </div>

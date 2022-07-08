@@ -2,26 +2,3 @@
 @import "_typography.scss";
 @import "_mixins.scss";
 @import "_grid.scss";
-
-body {
-  font-family: Montserrat, OpenSans;
-  margin: 0;
-  background-color: $background;
-
-  h1 {
-    margin: 0;
-  }
-
-  li {
-    list-style-type: none;
-  }
-
-  p {
-    margin: 0;
-    font-size: 12px;
-    @include respond-to("md") {
-      font-size: 18px;
-    }
-
-  }
-}

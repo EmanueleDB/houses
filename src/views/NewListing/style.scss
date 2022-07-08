@@ -1,3 +1,16 @@
+.background {
+  background-image: url("/src/static/images/img_background@3x.png");
+  background-size: 100% 100%;
+
+  .gradient {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, .2) 100%,
+      rgba(255, 255, 255, 1) 60%
+    );
+  }
+}
+
 .container {
   &__title {
     grid-column: span 12;
@@ -98,8 +111,8 @@
           }
         }
         &__button {
-          @include font-montserrat-semiBold;
-          width: 150px;
+          @include font-montserrat-bold;
+          width: 100%;
           padding: 10px;
           border-radius: 5px;
           border: unset;
@@ -108,9 +121,11 @@
           color: $white;
           cursor: pointer;
           font-size: 12px;
+          margin-top: 1rem;
           @include respond-to("md") {
             font-size: 18px;
             float: right;
+            width: 150px;
           }
         }
       }
@@ -125,158 +140,3 @@
     }
   }
 }
-
-//  &__background {
-//    background-image: url("/src/static/images/img_background@3x.png");
-//    background-size: 100% 100%;
-//    grid-column: span 12;
-//    margin-bottom: 60px;
-//
-//    @include respond-to("md") {
-//      margin-bottom: unset;
-//    }
-//
-//    h1 {
-//      font-size: 18px;
-//      margin: 0 auto;
-//      text-align: center;
-//
-//      @include respond-to("md") {
-//        font-size: 32px;
-//        text-align: unset;
-//      }
-//    }
-//
-//    &__new {
-//      @include respond-to("md") {
-//        width: 50%;
-//      }
-//
-//      div:nth-child(1) {
-//        margin-top: 10px;
-//      }
-//
-//      &__row {
-//        display: flex;
-//        margin: 0 1rem 10px 1rem;
-//
-//        @include respond-to("md") {
-//          margin: 0;
-//        }
-//
-//        &__double-column {
-//          @include respond-to("md") {
-//            width: 50%;
-//          }
-//
-//          &__input {
-//            border: unset;
-//            border-radius: 5px;
-//            padding: 5px;
-//            background-color: $tertiary-light;
-//          }
-//        }
-//
-//        &__column {
-//          width: 100%;
-//          @include respond-to("md") {
-//            width: unset;
-//            flex: 50%;
-//          }
-//
-//          &__file {
-//            display: flex;
-//            align-items: center;
-//            justify-content: center;
-//            width: 60px;
-//            height: 60px;
-//            padding: 10px;
-//            border: 3px dashed #ccc;
-//            cursor: pointer;
-//            margin-top: 10px;
-//
-//            &__icon {
-//              width: 30px;
-//              height: 30px;
-//            }
-//          }
-//
-//          &__button {
-//            @include font-montserrat-semiBold;
-//            width: 150px;
-//            padding: 10px;
-//            border-radius: 5px;
-//            border: unset;
-//            text-transform: uppercase;
-//            background-color: $primary;
-//            color: $white;
-//            cursor: pointer;
-//            font-size: 12px;
-//            @include respond-to("md") {
-//              font-size: 18px;
-//            }
-//          }
-//
-//          &__error {
-//            @include font-montserrat-mediumItalic;
-//            font-size: 12px;
-//            color: $primary;
-//            @include respond-to("md") {
-//              font-size: 14px;
-//            }
-//          }
-//          &__preview {
-//            width: 150px;
-//            height: 120px;
-//          }
-//        }
-//      }
-//      input[type="file"] {
-//        display: none;
-//      }
-//
-//      label {
-//        @include font-montserrat-semiBold;
-//        font-size: 12px;
-//        @include respond-to("md") {
-//          font-size: 14px;
-//        }
-//      }
-//
-//      &__select {
-//        border: unset;
-//        border-radius: 5px;
-//        padding: 5px;
-//        background-color: #e8e8e8;
-//        width: 97%;
-//      }
-//
-//      &__input {
-//        width: calc(100% - 1rem);
-//        border: unset;
-//        border-radius: 5px;
-//        padding: 5px;
-//        background-color: $tertiary-light;
-//        &::placeholder {
-//          color: $tertiary;
-//        }
-//        @include respond-to("md") {
-//          display: block;
-//          width: 200px;
-//        }
-//      }
-//
-//      &__text-area {
-//        width: 97%;
-//        height: 50px;
-//        border: unset;
-//        border-radius: 5px;
-//        padding: 5px;
-//        background-color: $tertiary-light;
-//
-//        @include respond-to("md") {
-//        }
-//      }
-//    }
-//  }
-//}

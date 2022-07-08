@@ -56,6 +56,7 @@ export default {
     display: none;
 
     @include respond-to("md") {
+      @include font-montserrat-semiBold;
       font-size: 1rem;
       display: unset;
     }

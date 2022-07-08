@@ -53,7 +53,6 @@
     }
 
     p {
-      @include font-montserrat-regular;
       line-height: 1.6;
     }
 
