@@ -45,7 +45,13 @@
                 <label class="form__box__inputs__label">Postal code*</label>
                 <input
                   v-model="newListing.zip"
-                  class="form__box__inputs__input"
+                  ref="zip"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('zip'),
+                    },
+                  ]"
                   type="text"
                   placeholder="e.g. 1000 AA"
                 />
@@ -54,7 +60,13 @@
                 <label class="form__box__inputs__label">City*</label>
                 <input
                   v-model="newListing.city"
-                  class="form__box__inputs__input"
+                  ref="city"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('city'),
+                    },
+                  ]"
                   type="text"
                   placeholder="e.g. Utrecht"
                 />
@@ -93,7 +105,13 @@
                 <label class="form__box__inputs__label">Price*</label>
                 <input
                   v-model="newListing.price"
-                  class="form__box__inputs__input"
+                  ref="price"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('price'),
+                    },
+                  ]"
                   type="number"
                   placeholder="e.g. € 150000"
                 />
@@ -102,7 +120,13 @@
                 <label class="form__box__inputs__label">Size*</label>
                 <input
                   v-model="newListing.size"
-                  class="form__box__inputs__input"
+                  ref="size"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('size'),
+                    },
+                  ]"
                   type="text"
                   placeholder="e.g. 60mq"
                 />
@@ -115,6 +139,7 @@
                   style="width: 100%"
                   v-model="newListing.hasGarage"
                 >
+                  <option value="" disabled selected hidden>Select</option>
                   <option value="true">Yes</option>
                   <option value="false">No</option>
                 </select>
@@ -123,7 +148,14 @@
                 <label class="form__box__inputs__label">Bedrooms*</label>
                 <input
                   v-model="newListing.bedrooms"
-                  class="form__box__inputs__input"
+                  ref="bedrooms"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error:
+                        errors.includes('bedrooms'),
+                    },
+                  ]"
                   type="number"
                   placeholder="Enter amount"
                 />
@@ -132,7 +164,14 @@
                 <label class="form__box__inputs__label">Bathrooms*</label>
                 <input
                   v-model="newListing.bathrooms"
-                  class="form__box__inputs__input"
+                  ref="bathrooms"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error:
+                        errors.includes('bathrooms'),
+                    },
+                  ]"
                   type="number"
                   placeholder="Enter amount"
                 />
@@ -150,19 +189,32 @@
               </div>
               <div class="form__box__inputs">
                 <label class="form__box__inputs__label">Description*</label>
-                <div class="form__box__inputs__text-area-wrapper">
+                <div
+                  class="form__box__inputs__text-area-wrapper"
+                  ref="description"
+                >
                   <textarea
                     v-model="newListing.description"
-                    class="form__box__inputs__text-area-wrapper__textarea"
+                    :class="[
+                      'form__box__inputs__text-area-wrapper__textarea',
+                      {
+                        'form__box__inputs__text-area-wrapper__textarea__error':
+                          errors.includes('bathrooms'),
+                      },
+                    ]"
                     placeholder="Enter description"
                   />
                 </div>
               </div>
-              <span class="form__box__error-message"
+              <span v-if="errors.length" class="form__box__error-message"
                 >Required field missing</span
               >
               <div class="form__box__inputs">
-                <button class="form__box__inputs__button" type="submit">
+                <button
+                  :disabled="!errors.length === 0"
+                  class="form__box__inputs__button"
+                  type="submit"
+                >
                   {{ isPatching ? "SAVE" : "POST" }}
                 </button>
               </div>
@@ -182,8 +234,8 @@ export default {
   components: { Back },
   data() {
     return {
-      newListing: {},
-      errors: false,
+      newListing: { hasGarage: "" },
+      errors: [],
       files: {},
       previewImage: null,
     }
@@ -197,10 +249,10 @@ export default {
     },
   },
   mounted() {
-    if (this.isPatching) this.checkIfPatching()
+    if (this.isPatching) this.adaptSchema()
   },
   methods: {
-    checkIfPatching() {
+    adaptSchema() {
       const [street, number] = this.listingToPatch.location.street.split(" ")
       this.newListing = {
         streetName: street,
@@ -247,12 +299,32 @@ export default {
     },
 
     checkErrors() {
-      console.log("xxx")
+      this.errors = []
+      const requiredInputs = [
+        "price",
+        "bedrooms",
+        "bathrooms",
+        "size",
+        "zip",
+        "city",
+        "description",
+      ]
+      requiredInputs.map((key) => {
+        if (!this.newListing[key]) {
+          this.$refs[key].style.border = "1px solid #EB5440"
+          this.errors.push(key)
+        } else {
+          this.errors = this.errors.filter((error) => error !== key)
+          this.$refs[key].style.border = "unset"
+        }
+      })
     },
 
     //To add a house I need to perform 2 calls, the first one will post the house and with the id given in its response
     //I can perform the second call to upload the image
     async createListing() {
+      this.checkErrors()
+      if (this.errors.length) return
       try {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const response = await axios({

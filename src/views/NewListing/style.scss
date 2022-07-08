@@ -5,7 +5,7 @@
   .gradient {
     background: linear-gradient(
       to right,
-      rgba(255, 255, 255, .2) 100%,
+      rgba(255, 255, 255, 0.2) 100%,
       rgba(255, 255, 255, 1) 60%
     );
   }
@@ -62,13 +62,24 @@
 
         &__input,
         &__select {
+          @include font-openSans-regular;
           border: unset;
           border-radius: 5px;
           padding: 10px;
           background-color: $tertiary-light;
+          font-size: 12px;
+          @include respond-to("md") {
+            font-size: 14px;
+          }
 
           &::placeholder {
             color: $tertiary;
+          }
+
+          &__error {
+            &::placeholder {
+              color: $primary;
+            }
           }
         }
 
@@ -78,13 +89,24 @@
           background-color: $tertiary-light;
 
           &__textarea {
+            @include font-openSans-regular;
             width: 100%;
             border: unset;
             background-color: $tertiary-light;
             height: 50px;
+            font-size: 12px;
+            @include respond-to("md") {
+              font-size: 14px;
+            }
 
             &::placeholder {
               color: $tertiary;
+            }
+
+            &__error {
+              &::placeholder {
+                color: $primary;
+              }
             }
           }
         }
