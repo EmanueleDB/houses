@@ -54,6 +54,7 @@
                   ]"
                   type="text"
                   placeholder="e.g. 1000 AA"
+                  @input="errorHelper($event, 'zip')"
                 />
               </div>
               <div class="form__box__inputs">
@@ -69,6 +70,7 @@
                   ]"
                   type="text"
                   placeholder="e.g. Utrecht"
+                  @input="errorHelper($event, 'city')"
                 />
               </div>
               <div class="form__box__inputs">
@@ -114,6 +116,7 @@
                   ]"
                   type="number"
                   placeholder="e.g. € 150000"
+                  @input="errorHelper($event, 'price')"
                 />
               </div>
               <div class="form__box__inputs__double">
@@ -129,6 +132,7 @@
                   ]"
                   type="text"
                   placeholder="e.g. 60mq"
+                  @input="errorHelper($event, 'size')"
                 />
               </div>
               <div class="form__box__inputs__double" style="width: 50%">
@@ -158,6 +162,7 @@
                   ]"
                   type="number"
                   placeholder="Enter amount"
+                  @input="errorHelper($event, 'bedrooms')"
                 />
               </div>
               <div class="form__box__inputs__double">
@@ -174,6 +179,7 @@
                   ]"
                   type="number"
                   placeholder="Enter amount"
+                  @input="errorHelper($event, 'bathrooms')"
                 />
               </div>
               <div class="form__box__inputs">
@@ -203,6 +209,7 @@
                       },
                     ]"
                     placeholder="Enter description"
+                    @input="errorHelper($event, 'description')"
                   />
                 </div>
               </div>
@@ -298,8 +305,17 @@ export default {
       }
     },
 
+    errorHelper(e, property) {
+      if (!e.target.value) {
+        this.errors.push(property)
+        this.$refs[property].style.border = "1px solid #EB5440"
+      }
+      this.errors = this.errors.filter((error) => error !== property)
+      this.$refs[property].style.border = "unset"
+    },
+
     checkErrors() {
-      this.errors = []
+        this.errors = []
       const requiredInputs = [
         "price",
         "bedrooms",
@@ -313,8 +329,10 @@ export default {
         if (!this.newListing[key]) {
           this.$refs[key].style.border = "1px solid #EB5440"
           this.errors.push(key)
+          console.log(this.errors)
         } else {
           this.errors = this.errors.filter((error) => error !== key)
+          console.log(this.errors)
           this.$refs[key].style.border = "unset"
         }
       })
@@ -335,6 +353,7 @@ export default {
           data: this.newListing,
           headers,
         })
+        //Edit
         if (this.isPatching) {
           await this.$store.commit("setSelectedListing", this.listingToPatch)
           await this.$store.dispatch("getListings")
@@ -342,12 +361,14 @@ export default {
             path: `/`,
           })
         } else {
+          //uploading the image based on the id
           await this.uploadImage(this.files[0], response.data.id)
           await this.$store.dispatch("getListings")
           const found = this.$store.state.listings.filter(
             (listing) => listing.id === response.data.id
           )
           await this.$store.commit("setSelectedListing", found[0])
+          //redirecting to the created/edited listing page
           await this.$router.push({ path: `/listing/${response.data.id}` })
         }
       } catch (e) {
