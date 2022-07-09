@@ -196,7 +196,13 @@
               <div class="form__box__inputs">
                 <label class="form__box__inputs__label">Description*</label>
                 <div
-                  class="form__box__inputs__text-area-wrapper"
+                  :class="[
+                    'form__box__inputs__text-area-wrapper',
+                    {
+                      'form__box__inputs__text-area-wrapper__error':
+                        errors.includes('description'),
+                    },
+                  ]"
                   ref="description"
                 >
                   <textarea
@@ -205,7 +211,7 @@
                       'form__box__inputs__text-area-wrapper__textarea',
                       {
                         'form__box__inputs__text-area-wrapper__textarea__error':
-                          errors.includes('bathrooms'),
+                          errors.includes('description'),
                       },
                     ]"
                     placeholder="Enter description"
@@ -218,7 +224,7 @@
               >
               <div class="form__box__inputs">
                 <button
-                  :disabled="!errors.length === 0"
+                  :disabled="errors.length > 0"
                   class="form__box__inputs__button"
                   type="submit"
                 >
@@ -256,9 +262,12 @@ export default {
     },
   },
   mounted() {
+    console.log(this.errors)
     if (this.isPatching) this.adaptSchema()
   },
   methods: {
+    //the listing object in the api has a different structure than the object we send for creating/editing a listing
+    //I need to adapt it when it has been fetched to show it in this component
     adaptSchema() {
       const [street, number] = this.listingToPatch.location.street.split(" ")
       this.newListing = {
@@ -279,70 +288,23 @@ export default {
       }
     },
 
-    getFile(e) {
-      this.files = e.target.files
-      if (!this.files.length) return
-      const reader = new FileReader()
-      reader.onload = () => {
-        this.previewImage = reader.result
-      }
-      reader.readAsDataURL(this.files[0])
-    },
-
-    async uploadImage(file, id) {
-      try {
-        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
-        const data = new FormData()
-        data.append("image", file)
-        await axios({
-          method: "POST",
-          url: `https://api.intern.d-tt.nl/api/houses/${id}/upload`,
-          data,
-          headers,
-        })
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
     errorHelper(e, property) {
-      if (!e.target.value) {
-        this.errors.push(property)
-        this.$refs[property].style.border = "1px solid #EB5440"
-      }
-      this.errors = this.errors.filter((error) => error !== property)
-      this.$refs[property].style.border = "unset"
+      if (e.target.value)
+        this.errors = this.errors.filter((error) => error !== property)
+      else this.errors.push(property)
     },
 
-    checkErrors() {
-        this.errors = []
-      const requiredInputs = [
-        "price",
-        "bedrooms",
-        "bathrooms",
-        "size",
-        "zip",
-        "city",
-        "description",
-      ]
-      requiredInputs.map((key) => {
-        if (!this.newListing[key]) {
-          this.$refs[key].style.border = "1px solid #EB5440"
-          this.errors.push(key)
-          console.log(this.errors)
-        } else {
-          this.errors = this.errors.filter((error) => error !== key)
-          console.log(this.errors)
-          this.$refs[key].style.border = "unset"
-        }
+    checkErrors(missingRequiredFields) {
+      this.errors = []
+      missingRequiredFields.map((field) => {
+        this.errors.push(field)
       })
     },
 
     //To add a house I need to perform 2 calls, the first one will post the house and with the id given in its response
     //I can perform the second call to upload the image
     async createListing() {
-      this.checkErrors()
-      if (this.errors.length) return
+      console.log('clicked')
       try {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const response = await axios({
@@ -371,6 +333,32 @@ export default {
           //redirecting to the created/edited listing page
           await this.$router.push({ path: `/listing/${response.data.id}` })
         }
+      } catch (e) {
+        this.checkErrors(e.response.data.data)
+      }
+    },
+
+    getFile(e) {
+      this.files = e.target.files
+      if (!this.files.length) return
+      const reader = new FileReader()
+      reader.onload = () => {
+        this.previewImage = reader.result
+      }
+      reader.readAsDataURL(this.files[0])
+    },
+
+    async uploadImage(file, id) {
+      try {
+        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
+        const data = new FormData()
+        data.append("image", file)
+        await axios({
+          method: "POST",
+          url: `https://api.intern.d-tt.nl/api/houses/${id}/upload`,
+          data,
+          headers,
+        })
       } catch (e) {
         console.log(e)
       }

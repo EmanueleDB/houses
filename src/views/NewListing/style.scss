@@ -71,12 +71,16 @@
           @include respond-to("md") {
             font-size: 14px;
           }
-
+          &:focus {
+            outline: none;
+          }
           &::placeholder {
             color: $tertiary;
           }
 
           &__error {
+            border: 1px solid $primary;
+
             &::placeholder {
               color: $primary;
             }
@@ -88,6 +92,10 @@
           padding: 10px;
           background-color: $tertiary-light;
 
+          &__error {
+            border: 1px solid $primary;
+          }
+
           &__textarea {
             @include font-openSans-regular;
             width: 100%;
@@ -97,6 +105,9 @@
             font-size: 12px;
             @include respond-to("md") {
               font-size: 14px;
+            }
+            &:focus {
+              outline: none;
             }
 
             &::placeholder {
@@ -151,6 +162,7 @@
           }
           &:disabled {
             opacity: 0.7;
+            cursor: unset;
           }
         }
       }
