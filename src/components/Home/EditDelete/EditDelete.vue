@@ -105,11 +105,14 @@ export default {
 .edit {
   display: flex;
   position: absolute;
-  right: 0;
+  right: 10px;
+  @include respond-to("md") {
+    right: 2rem;
+  }
 
-  &__icon {
-    width: 20px;
-    height: 20px;
+    &__icon {
+    width: 15px;
+    height: 15px;
     margin-left: 10px;
     cursor: pointer;
   }

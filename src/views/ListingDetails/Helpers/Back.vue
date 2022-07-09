@@ -42,12 +42,13 @@ export default {
     margin: 2rem 0 1rem 0;
     grid-column: span 12;
     display: flex;
+    align-items: center;
     font-size: 1rem;
     @include font-montserrat-semiBold;
   }
   &__icon {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     margin-right: 10px;
     cursor: pointer;
   }

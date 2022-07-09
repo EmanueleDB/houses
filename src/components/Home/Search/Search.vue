@@ -5,13 +5,6 @@
       src="../../../static/images/ic_search@3x.png"
       alt="search icon"
     />
-    <img
-      v-if="searchQuery !== ''"
-      class="container__search__clear"
-      src="../../../static/images/ic_clear@3x.png"
-      alt="clear"
-      @click="clearSearch()"
-    />
     <input
       v-model="searchQuery"
       type="text"
@@ -19,6 +12,14 @@
       class="container__search__input-text"
       @input="changeInput($event)"
     />
+    <img
+      v-if="searchQuery !== ''"
+      class="container__search__clear"
+      src="../../../static/images/ic_clear@3x.png"
+      alt="clear"
+      @click="clearSearch()"
+    />
+
     <div class="tab container__search__tab">
       <button
         :class="[
