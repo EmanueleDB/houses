@@ -142,6 +142,15 @@
             width: 30px;
             height: 30px;
           }
+
+          &__delete-image {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            left: 134px;
+            top: 16px;
+            cursor: pointer;
+          }
         }
         &__button {
           @include font-montserrat-bold;

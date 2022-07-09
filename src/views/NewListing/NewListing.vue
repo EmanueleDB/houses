@@ -73,7 +73,15 @@
                   @input="errorHelper($event, 'city')"
                 />
               </div>
-              <div class="form__box__inputs">
+              <div class="form__box__inputs" style="position: relative">
+                <img
+                  v-if="previewImage || listingToPatch.image"
+                  class="form__box__inputs__file__delete-image"
+                  src="../../static/images/ic_clear_white@3x.png"
+                  alt="upload-icon"
+                  @click="deleteImage()"
+                />
+
                 <label class="form__box__inputs__label"
                   >Upload picture(PNG or JPG)*</label
                 >
@@ -263,6 +271,7 @@ export default {
   },
   mounted() {
     if (this.isPatching) this.adaptSchema()
+    console.log(this.listingToPatch)
   },
   methods: {
     //the listing object in the api has a different structure than the object we send for creating/editing a listing
@@ -326,7 +335,7 @@ export default {
 
     getFile(e) {
       this.files = e.target.files
-      if (!this.files.length) return
+      if (this.files.length === 0) return
       else {
         const reader = new FileReader()
         reader.onload = () => {
@@ -351,6 +360,15 @@ export default {
         console.log(e)
       }
     },
+
+    async deleteImage() {
+      if (this.isPatching) {
+        this.newListing.image = ""
+        this.listingToPatch.image = ""
+      }
+      this.previewImage = null
+    },
+
     async patchingActions() {
       await this.uploadImage(this.files[0], this.listingToPatch.id)
       await this.$store.commit("setSelectedListing", this.listingToPatch)
@@ -359,8 +377,9 @@ export default {
         path: `/`,
       })
     },
+
+    //uploading the image based on the id
     async creatingActions(id) {
-      //uploading the image based on the id
       await this.uploadImage(this.files[0], id)
       await this.$store.dispatch("getListings")
       const found = this.$store.state.listings.filter(
