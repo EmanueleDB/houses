@@ -271,7 +271,6 @@ export default {
   },
   mounted() {
     if (this.isPatching) this.adaptSchema()
-    console.log(this.listingToPatch)
   },
   methods: {
     //the listing object in the api has a different structure than the object we send for creating/editing a listing
