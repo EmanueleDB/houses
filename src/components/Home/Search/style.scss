@@ -7,12 +7,14 @@
     align-items: center;
     width: 90%;
     margin: 0 auto 2rem auto;
+    padding: 10px;
 
     @include respond-to("md") {
       flex-direction: unset;
       align-items: unset;
       justify-content: space-between;
       margin: 0 0 2rem 0;
+      padding: unset;
       width: 100%;
     }
 
@@ -20,8 +22,8 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      left: 95%;
-      top: 12%;
+      right: 30px;
+      top: 17px;
       cursor: pointer;
 
       @include respond-to("md") {
@@ -34,8 +36,8 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      top: 20%;
-      left: 20px;
+      top: 30px;
+      left: 30px;
       transform: translate(-50%, -50%);
       color: $tertiary;
 
@@ -68,14 +70,19 @@
 
       &__price,
       &__size {
+        @include font-montserrat-bold;
         background-color: $tertiary;
         width: 50%;
         color: $white;
         padding: 10px 0;
         border: unset;
         cursor: pointer;
+        font-size: 12px;
+        @include respond-to("md") {
+          font-size: 18px;
+        }
 
-        &.active {
+          &.active {
           background-color: $primary;
         }
       }

@@ -1,195 +1,244 @@
 <template>
   <form @submit.prevent="createListing()">
-    <div class="container">
-      <div class="container__background">
-        <Back />
-        <h1>Create new listing</h1>
-        <div class="container__background__new">
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Street name*</label>
-              <input
-                v-model="newListing.streetName"
-                class="container__background__new__input"
-                type="text"
-              />
-            </div>
+    <div class="background">
+      <div class="gradient">
+        <div class="container">
+          <div class="container__title">
+            <Back :change-style="true" />
+            <h1 style="margin-top: 1rem">
+              {{ isPatching ? "Edit listing" : "Create new listing" }}
+            </h1>
           </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>House number*</label>
-              <input
-                v-model="newListing.houseNumber"
-                class="container__background__new__input"
-                style="margin-right: 20px"
-                type="number"
-              />
-            </div>
-            <div
-              class="container__background__new__row__column"
-              style="margin-top: 10px"
-            >
-              <label>Additional (optional)</label>
-              <input
-                v-model="newListing.numberAddition"
-                class="container__background__new__input"
-                type="number"
-              />
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Postal code*</label>
-              <input
-                v-model="newListing.zip"
-                class="container__background__new__input"
-                type="text"
-              />
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>City*</label>
-              <input
-                v-model="newListing.city"
-                class="container__background__new__input"
-                type="text"
-              />
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div
-              class="container__background__new__row__column"
-              style="display: flex; flex-direction: column"
-            >
-              <label>Upload picture(PNG or JPG)*</label>
-              <img
-                v-if="isPatching"
-                class="container__background__new__row__column__preview"
-                :src="newListing.image"
-                alt="image"
-              />
-              <img
-                v-else-if="previewImage"
-                class="container__background__new__row__column__preview"
-                :src="previewImage"
-                alt="image"
-              />
-              <label
-                v-else
-                class="container__background__new__row__column__file"
-              >
+
+          <div class="form">
+            <div class="form__box">
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Street name*</label>
                 <input
-                  type="file"
-                  accept="image/jpg, image/png"
-                  style="display: none"
-                  @change="getFile($event)"
+                  v-model="newListing.streetName"
+                  class="form__box__inputs__input"
+                  type="text"
+                  placeholder="Enter the street name"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">House number*</label>
+                <input
+                  v-model="newListing.houseNumber"
+                  class="form__box__inputs__input"
+                  type="number"
+                  placeholder="Enter house number"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label"
+                  >Additional (optional)*</label
+                >
+                <input
+                  v-model="newListing.numberAddition"
+                  class="form__box__inputs__input"
+                  type="number"
+                  placeholder="e.g. A"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Postal code*</label>
+                <input
+                  v-model="newListing.zip"
+                  ref="zip"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('zip'),
+                    },
+                  ]"
+                  type="text"
+                  placeholder="e.g. 1000 AA"
+                  @input="errorHelper($event, 'zip')"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">City*</label>
+                <input
+                  v-model="newListing.city"
+                  ref="city"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('city'),
+                    },
+                  ]"
+                  type="text"
+                  placeholder="e.g. Utrecht"
+                  @input="errorHelper($event, 'city')"
+                />
+              </div>
+              <div class="form__box__inputs" style="position: relative">
+                <img
+                  v-if="previewImage || listingToPatch.image"
+                  class="form__box__inputs__file__delete-image"
+                  src="../../static/images/ic_clear_white@3x.png"
+                  alt="upload-icon"
+                  @click="deleteImage()"
+                />
+
+                <label class="form__box__inputs__label"
+                  >Upload picture(PNG or JPG)*</label
+                >
+                <img
+                  v-if="isPatching && newListing.image"
+                  class="form__box__inputs__preview"
+                  :src="newListing.image"
+                  alt="image"
                 />
                 <img
-                  class="container__background__new__row__column__file__icon"
-                  src="../../static/images/ic_upload@3x.png"
-                  alt="upload-icon"
+                  v-else-if="previewImage"
+                  class="form__box__inputs__preview"
+                  :src="previewImage"
+                  alt="image"
                 />
-              </label>
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Price*</label>
-              <input
-                v-model="newListing.price"
-                class="container__background__new__input"
-                type="number"
-              />
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Size*</label>
-              <input
-                v-model="newListing.size"
-                class="container__background__new__input"
-                style="margin-right: 20px"
-                type="number"
-              />
-            </div>
-            <div
-              class="container__background__new__row__column"
-              style="margin-top: 10px"
-            >
-              <label>Garage*</label>
-              <select
-                name="garage"
-                class="container__background__new__input"
-                v-model="newListing.hasGarage"
-              >
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-              </select>
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Bedrooms*</label>
-              <input
-                v-model="newListing.bedrooms"
-                class="container__background__new__input"
-                style="margin-right: 20px"
-                type="number"
-              />
-            </div>
-            <div
-              class="container__background__new__row__column"
-              style="margin-top: 10px"
-            >
-              <label>Bathrooms*</label>
-              <input
-                v-model="newListing.bathrooms"
-                class="container__background__new__input"
-                type="number"
-              />
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Construction date*</label>
-              <input
-                v-model="newListing.constructionYear"
-                class="container__background__new__input"
-                type="number"
-              />
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <label>Description*</label>
-              <textarea
-                v-model="newListing.description"
-                class="container__background__new__input"
-                style="
-                  width: 100%;
-                  height: calc(100% - 30px);
-                  margin-bottom: 30px;
-                "
-              />
-            </div>
-          </div>
-          <div class="container__background__new__row">
-            <div class="container__background__new__row__column">
-              <span class="container__background__new__row__column__error"
+                <label v-else class="form__box__inputs__file">
+                  <input
+                    type="file"
+                    accept="image/jpg, image/png"
+                    style="display: none"
+                    @change="getFile($event)"
+                  />
+                  <img
+                    class="form__box__inputs__file__icon"
+                    src="../../static/images/ic_upload@3x.png"
+                    alt="upload-icon"
+                  />
+                </label>
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Price*</label>
+                <input
+                  v-model="newListing.price"
+                  ref="price"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('price'),
+                    },
+                  ]"
+                  type="number"
+                  placeholder="e.g. € 150000"
+                  @input="errorHelper($event, 'price')"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">Size*</label>
+                <input
+                  v-model="newListing.size"
+                  ref="size"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error: errors.includes('size'),
+                    },
+                  ]"
+                  type="text"
+                  placeholder="e.g. 60mq"
+                  @input="errorHelper($event, 'size')"
+                />
+              </div>
+              <div class="form__box__inputs__double" style="width: 50%">
+                <label class="form__box__inputs__label">Garage*</label>
+                <select
+                  name="garage"
+                  class="form__box__inputs__select"
+                  style="width: 100%"
+                  v-model="newListing.hasGarage"
+                >
+                  <option value="" disabled selected hidden>Select</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">Bedrooms*</label>
+                <input
+                  v-model="newListing.bedrooms"
+                  ref="bedrooms"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error:
+                        errors.includes('bedrooms'),
+                    },
+                  ]"
+                  type="number"
+                  placeholder="Enter amount"
+                  @input="errorHelper($event, 'bedrooms')"
+                />
+              </div>
+              <div class="form__box__inputs__double">
+                <label class="form__box__inputs__label">Bathrooms*</label>
+                <input
+                  v-model="newListing.bathrooms"
+                  ref="bathrooms"
+                  :class="[
+                    'form__box__inputs__input',
+                    {
+                      form__box__inputs__input__error:
+                        errors.includes('bathrooms'),
+                    },
+                  ]"
+                  type="number"
+                  placeholder="Enter amount"
+                  @input="errorHelper($event, 'bathrooms')"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label"
+                  >Construction date*</label
+                >
+                <input
+                  v-model="newListing.constructionYear"
+                  class="form__box__inputs__input"
+                  type="text"
+                  placeholder="e.g 1980"
+                />
+              </div>
+              <div class="form__box__inputs">
+                <label class="form__box__inputs__label">Description*</label>
+                <div
+                  :class="[
+                    'form__box__inputs__text-area-wrapper',
+                    {
+                      'form__box__inputs__text-area-wrapper__error':
+                        errors.includes('description'),
+                    },
+                  ]"
+                  ref="description"
+                >
+                  <textarea
+                    v-model="newListing.description"
+                    :class="[
+                      'form__box__inputs__text-area-wrapper__textarea',
+                      {
+                        'form__box__inputs__text-area-wrapper__textarea__error':
+                          errors.includes('description'),
+                      },
+                    ]"
+                    placeholder="Enter description"
+                    @input="errorHelper($event, 'description')"
+                  />
+                </div>
+              </div>
+              <span v-if="errors.length" class="form__box__error-message"
                 >Required field missing</span
               >
-            </div>
-            <div
-              class="container__background__new__row__column"
-              style="display: flex; justify-content: flex-end"
-            >
-              <button
-                class="container__background__new__row__column__button"
-                type="submit"
-              >
-                POST
-              </button>
+              <div class="form__box__inputs">
+                <button
+                  :disabled="errors.length > 0"
+                  class="form__box__inputs__button"
+                  type="submit"
+                >
+                  {{ isPatching ? "SAVE" : "POST" }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -206,8 +255,8 @@ export default {
   components: { Back },
   data() {
     return {
-      newListing: {},
-      errors: false,
+      newListing: { hasGarage: "" },
+      errors: [],
       files: {},
       previewImage: null,
     }
@@ -216,33 +265,84 @@ export default {
     isPatching() {
       return this.$store.state.patching
     },
+    listingToPatch() {
+      return this.$store.state.listingToPatch
+    },
   },
   mounted() {
-    this.checkIfPatching()
+    if (this.isPatching) this.adaptSchema()
+    console.log(this.listingToPatch)
   },
   methods: {
-    checkIfPatching() {
-      if (this.isPatching) {
-        const [street, number] =
-          this.$store.state.listingToPatch.location.street.split(" ")
-        this.newListing = {
-          streetName: street,
-          houseNumber: number,
-          city: this.$store.state.listingToPatch.location.city,
-          zip: this.$store.state.listingToPatch.location.zip,
-          ...this.$store.state.listingToPatch,
+    //the listing object in the api has a different structure than the object we send for creating/editing a listing
+    //I need to adapt it when it has been fetched to show it in this component
+    adaptSchema() {
+      const [street, number] = this.listingToPatch.location.street.split(" ")
+      this.newListing = {
+        streetName: street,
+        houseNumber: number,
+        price: this.listingToPatch.price,
+        bedrooms: this.listingToPatch.rooms.bedrooms,
+        bathrooms: this.listingToPatch.rooms.bathrooms,
+        size: this.listingToPatch.size,
+        streetName: street,
+        houseNumber: number,
+        zip: this.listingToPatch.location.zip,
+        city: this.listingToPatch.location.city,
+        constructionYear: this.listingToPatch.constructionYear,
+        hasGarage: this.listingToPatch.hasGarage,
+        description: this.listingToPatch.description,
+        image: this.listingToPatch.image,
+      }
+    },
+
+    errorHelper(e, property) {
+      if (e.target.value)
+        this.errors = this.errors.filter((error) => error !== property)
+      else this.errors.push(property)
+    },
+
+    checkErrors(missingRequiredFields) {
+      this.errors = []
+      missingRequiredFields.map((field) => {
+        this.errors.push(field)
+      })
+    },
+
+    //To add a house I need to perform 2 calls, the first one will post the house and with the id given in its response
+    //I can perform the second call to upload the image
+    async createListing() {
+      try {
+        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
+        const response = await axios({
+          method: "POST",
+          url: this.isPatching
+            ? `https://api.intern.d-tt.nl/api/houses/${this.listingToPatch.id}`
+            : "https://api.intern.d-tt.nl/api/houses",
+          data: this.newListing,
+          headers,
+        })
+        //Edit
+        if (this.isPatching) {
+          this.patchingActions()
+        } else {
+          this.creatingActions(response.data.id)
         }
+      } catch (e) {
+        this.checkErrors(e.response.data.data)
       }
     },
 
     getFile(e) {
       this.files = e.target.files
-      if (!this.files.length) return
-      const reader = new FileReader()
-      reader.onload = () => {
-        this.previewImage = reader.result
+      if (this.files.length === 0) return
+      else {
+        const reader = new FileReader()
+        reader.onload = () => {
+          this.previewImage = reader.result
+        }
+        reader.readAsDataURL(this.files[0])
       }
-      reader.readAsDataURL(this.files[0])
     },
 
     async uploadImage(file, id) {
@@ -261,35 +361,33 @@ export default {
       }
     },
 
-    checkErrors() {
-      console.log("xxx")
+    async deleteImage() {
+      if (this.isPatching) {
+        this.newListing.image = ""
+        this.listingToPatch.image = ""
+      }
+      this.previewImage = null
     },
 
-    //To add a house I need to perform 2 calls, the first one will post the house and with the id given in its response
-    //I can perform the second call to upload the image
-    async createListing() {
-      try {
-        const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
-        const response = await axios({
-          method: "POST",
-          url: "https://api.intern.d-tt.nl/api/houses",
-          data: this.newListing,
-          headers,
-        })
-        if (!response) console.log("Oops, there was a problem...")
-        else {
-          await this.uploadImage(this.files[0], response.data.id)
-          await this.$store.dispatch("getListings")
-          const found = this.$store.state.listings.filter(
-            (listing) => listing.id === response.data.id
-          )
-          await this.$store.commit("setSelectedListing", found[0])
+    async patchingActions() {
+      await this.uploadImage(this.files[0], this.listingToPatch.id)
+      await this.$store.commit("setSelectedListing", this.listingToPatch)
+      await this.$store.dispatch("getListings")
+      await this.$router.push({
+        path: `/`,
+      })
+    },
 
-          await this.$router.push({ path: `/listing/${response.data.id}` })
-        }
-      } catch (e) {
-        console.log(e)
-      }
+    //uploading the image based on the id
+    async creatingActions(id) {
+      await this.uploadImage(this.files[0], id)
+      await this.$store.dispatch("getListings")
+      const found = this.$store.state.listings.filter(
+        (listing) => listing.id === id
+      )
+      await this.$store.commit("setSelectedListing", found[0])
+      //redirecting to the created/edited listing page
+      await this.$router.push({ path: `/listing/${id}` })
     },
   },
 }

@@ -1,92 +1,186 @@
+.background {
+  background-image: url("/src/static/images/img_background@3x.png");
+  background-size: 100% 100%;
+
+  .gradient {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.2) 100%,
+      rgba(255, 255, 255, 1) 60%
+    );
+  }
+}
+
 .container {
-  width: 100%;
-  height: 100%;
-  &__background {
-    background-image: url("/src/static/images/img_background@3x.png");
-    background-size: 100% 100%;
-    width: 100vw;
-    height: 100%;
+  &__title {
+    grid-column: span 12;
+    text-align: center;
 
-    &__new {
-      width: 50%;
-
-      div:nth-child(1) {
-        margin-top: 10px;
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      @include respond-to("md") {
+        font-size: 2rem;
+        text-align: left;
       }
+    }
+  }
 
-      &__row {
-        display: flex;
+  .form {
+    grid-column: span 11;
+    width: 100%;
+    margin: 1rem 1rem 55px 1rem;
+
+    @include respond-to("md") {
+      grid-column: span 12;
+      margin: 0;
+      width: 50%;
+    }
+
+    &__box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+
+      &__inputs {
         margin-bottom: 10px;
+        width: 100%;
 
-        &__column {
-          flex: 50%;
+        &__double {
+          margin-bottom: 10px;
+        }
 
-          &__file {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            padding: 10px;
-            border: 3px dashed #ccc;
-            cursor: pointer;
-            margin-top: 10px;
-
-            &__icon {
-              width: 30px;
-              height: 30px;
-            }
+        &__label {
+          display: block;
+          margin-bottom: 5px;
+          font-size: 12px;
+          @include respond-to("md") {
+            font-size: 14px;
           }
+        }
 
-          &__button {
-            @include font-montserrat-semiBold;
-            width: 150px;
-            padding: 10px;
-            border-radius: 5px;
-            border: unset;
-            text-transform: uppercase;
-            background-color: $primary;
-            color: $white;
-            cursor: pointer;
+        &__input,
+        &__select {
+          @include font-openSans-regular;
+          border: unset;
+          border-radius: 5px;
+          padding: 10px;
+          background-color: $tertiary-light;
+          font-size: 12px;
+          @include respond-to("md") {
+            font-size: 14px;
+          }
+          &:focus {
+            outline: none;
+          }
+          &::placeholder {
+            color: $tertiary;
           }
 
           &__error {
-            @include font-montserrat-mediumItalic;
+            border: 1px solid $primary;
+
+            &::placeholder {
+              color: $primary;
+            }
+          }
+        }
+
+        &__text-area-wrapper {
+          border-radius: 10px;
+          padding: 10px;
+          background-color: $tertiary-light;
+
+          &__error {
+            border: 1px solid $primary;
+          }
+
+          &__textarea {
+            @include font-openSans-regular;
+            width: 100%;
+            border: unset;
+            background-color: $tertiary-light;
+            height: 50px;
             font-size: 12px;
-            color: $primary;
             @include respond-to("md") {
               font-size: 14px;
             }
+            &:focus {
+              outline: none;
+            }
+
+            &::placeholder {
+              color: $tertiary;
+            }
+
+            &__error {
+              &::placeholder {
+                color: $primary;
+              }
+            }
           }
-          &__preview {
+        }
+
+        &__preview {
+          width: 150px;
+          height: 120px;
+        }
+
+        &__file {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 60px;
+          height: 60px;
+          padding: 10px;
+          border: 3px dashed #ccc;
+          cursor: pointer;
+          margin-top: 10px;
+
+          &__icon {
+            width: 30px;
+            height: 30px;
+          }
+
+          &__delete-image {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            left: 134px;
+            top: 16px;
+            cursor: pointer;
+          }
+        }
+        &__button {
+          @include font-montserrat-bold;
+          width: 100%;
+          padding: 10px;
+          border-radius: 5px;
+          border: unset;
+          text-transform: uppercase;
+          background-color: $primary;
+          color: $white;
+          cursor: pointer;
+          font-size: 12px;
+          margin-top: 1rem;
+          @include respond-to("md") {
+            font-size: 18px;
+            float: right;
             width: 150px;
-            height: 120px;
+          }
+          &:disabled {
+            opacity: 0.7;
+            cursor: unset;
           }
         }
       }
-      input[type="file"] {
-        display: none;
-      }
-
-      label {
-        @include font-montserrat-semiBold;
+      &__error-message {
+        @include font-montserrat-mediumItalic;
         font-size: 12px;
+        color: $primary;
         @include respond-to("md") {
           font-size: 14px;
-        }
-      }
-
-      &__input {
-        border: unset;
-        border-radius: 5px;
-        padding: 5px;
-        background-color: $tertiary-light;
-        &::placeholder {
-          color: $tertiary;
-        }
-        @include respond-to("md") {
-          display: block;
-          width: 200px;
         }
       }
     }

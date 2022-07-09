@@ -1,6 +1,9 @@
 .container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  @include respond-to("md") {
+    margin: 90px 10% 1rem 10%;
+  }
 
   &__top {
     display: flex;
@@ -10,7 +13,7 @@
 
     @include respond-to("md") {
       justify-content: space-between;
-      margin: 3rem 0 1rem 0;
+      margin: 2rem 0 1rem 0;
     }
 
     h1 {
@@ -23,7 +26,7 @@
     &__button-container {
       margin: auto 0;
       &__button {
-        @include font-montserrat-semiBold;
+        @include font-montserrat-bold;
         width: 150px;
         padding: 10px;
         border-radius: 5px;
@@ -32,9 +35,21 @@
         background-color: $primary;
         color: $white;
         cursor: pointer;
+        font-size: 12px;
+        @include respond-to("md") {
+          font-size: 18px;
+          width: auto;
+        }
         &__icon {
-          width: 11px;
-          margin-right: 5px;
+          width: 20px;
+          position: absolute;
+          right: 20px;
+          top: 20px;
+          @include respond-to("md") {
+            position: unset;
+            width: 11px;
+            margin-right: 5px;
+          }
         }
       }
     }

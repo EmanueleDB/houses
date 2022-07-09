@@ -1,53 +1,60 @@
 <template>
-  <nav class="navigation">
-    <div v-if="windowWidth > 420" class="navigation__container">
-      <img
-        class="navigation__container__image"
-        src="../static/images/img_logo_dtt@3x.png"
-        alt="logo"
-        @click="
-          $router.push('/').catch(() => {})
-          setActiveBtn('/')
-        "
-      />
-      <ul v-for="item in navItems" :key="item.id">
-        <span @click="setActiveBtn(item.url)">
-          <router-link
-            :class="[
-              'navigation__container__item',
-              { 'router-link-exact-active': activeBtn === item.url },
-            ]"
-            :to="item.url"
-            >{{ item.name }}</router-link
-          ></span
-        >
-      </ul>
-    </div>
-    <div v-else class="navigation__container">
-      <div
-        style="width: 50%; text-align: center"
-        v-for="item in navItems"
-        :key="item.id"
-      >
-        <router-link class="navigation__container__item" :to="item.url">
-          <div
-            class="navigation__container__item__wrapper"
-            @click="setActiveBtn(item.url)"
+  <div class="navigation-container">
+    <nav v-if="windowWidth > 576" class="navigation-container__navigation">
+      <div class="navigation-container__navigation__container">
+        <img
+          class="navigation-container__navigation__container__image"
+          src="../static/images/img_logo_dtt@3x.png"
+          alt="logo"
+          @click="
+            $router.push('/').catch(() => {})
+            setActiveBtn('/')
+          "
+        />
+        <ul v-for="item in navItems" :key="item.id">
+          <span @click="setActiveBtn(item.url)">
+            <router-link
+              :class="[
+                'navigation-container__navigation__container__item',
+                { 'router-link-exact-active': activeBtn === item.url },
+              ]"
+              :to="item.url"
+              >{{ item.name }}</router-link
+            ></span
           >
-            <img
-              class="navigation__container__item__wrapper__image"
-              :src="
-                activeBtn === item.url
-                  ? require(`../static/images/${item.icon.active}`)
-                  : require(`../static/images/${item.icon.default}`)
-              "
-              alt="logo"
-            />
-          </div>
-        </router-link>
+        </ul>
       </div>
-    </div>
-  </nav>
+    </nav>
+    <nav v-else class="navigation-container__navigation">
+      <div class="navigation-container__navigation__container">
+        <div
+          style="width: 50%; text-align: center"
+          v-for="item in navItems"
+          :key="item.id"
+        >
+          <router-link
+            class="navigation-container__navigation__container__item"
+            :to="item.url"
+          >
+            <div
+              class="navigation-container__navigation__container__item__wrapper"
+              @click="setActiveBtn(item.url)"
+            >
+              <img
+                class="navigation-container__navigation__container__item__wrapper__image"
+                :src="
+                  activeBtn === item.url
+                    ? require(`../static/images/${item.icon.active}`)
+                    : require(`../static/images/${item.icon.default}`)
+                "
+                alt="logo"
+              />
+            </div>
+          </router-link>
+        </div>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -100,56 +107,67 @@ export default {
 </script>
 
 <style lang="scss">
-.navigation {
-  display: flex;
+.navigation-container {
+  position: fixed;
+  right: 0;
+  z-index: 100;
+  bottom: 0;
+  height: 55px;
   background-color: $white;
 
-  &__container {
+  width: 100%;
+  @include respond-to("md") {
+    top: 0;
+    bottom: unset;
+    height: unset;
+    padding: 10px;
+  }
+
+  &__navigation {
     display: flex;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
     height: 55px;
-    background-color: $white;
-
-    @include respond-to("xsm") {
-      position: relative;
-      bottom: unset;
-      left: unset;
-      right: unset;
-      justify-content: unset;
+    @include respond-to("md") {
       margin: 0 10%;
-      padding: 10px 0;
+      height: 70px;
     }
 
-    &__image {
-      height: 45px;
-      margin-right: 20px;
-    }
+      &__container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      background-color: $white;
 
-    &__item {
-      color: $tertiary;
-      @include font-montserrat-regular;
-      font-size: 18px;
-      text-decoration: unset;
-      padding: 10px;
-      margin-right: 20px;
-      cursor: pointer;
+      @include respond-to("md") {
+        padding: 10px;
+      }
 
-      &__wrapper {
-        &__image {
-          width: 30px;
-          height: 30px;
+      &__image {
+        height: 45px;
+        margin-right: 20px;
+      }
+
+      &__item {
+        @include respond-to("md") {
+          @include font-montserrat-medium;
+          text-decoration: unset;
+          cursor: pointer;
+          color: $tertiary;
+          font-size: 18px;
+        }
+
+        &__wrapper {
+          &__image {
+            width: 30px;
+            height: 30px;
+          }
         }
       }
-    }
-    .router-link-exact-active {
-      @include font-montserrat-bold;
-      color: $text-primary;
-      cursor: default;
+      .router-link-exact-active {
+        @include font-montserrat-bold;
+        font-size: 18px;
+        color: $text-primary;
+        cursor: default;
+      }
     }
   }
 }

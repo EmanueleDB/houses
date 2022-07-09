@@ -3,7 +3,7 @@
     <img
       class="back__icon"
       :src="
-        windowWidth > 768
+        windowWidth > 768 || changeStyle
           ? require(`../../../static/images/ic_back_grey@3x.png`)
           : require(`../../../static/images/ic_back_white@3x.png`)
       "
@@ -17,6 +17,12 @@
 <script>
 export default {
   name: "Back",
+  props: {
+    changeStyle: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     windowWidth() {
       return this.$store.state.windowWidth
@@ -28,12 +34,12 @@ export default {
 <style lang="scss">
 .back {
   position: absolute;
-  top: 80px;
+  top: 20px;
   left: 30px;
 
   @include respond-to("md") {
     position: unset;
-    margin: 3rem 0 2rem 0;
+    margin: 2rem 0 1rem 0;
     grid-column: span 12;
     display: flex;
     font-size: 1rem;
@@ -50,6 +56,8 @@ export default {
     display: none;
 
     @include respond-to("md") {
+      @include font-montserrat-semiBold;
+      font-size: 1rem;
       display: unset;
     }
   }

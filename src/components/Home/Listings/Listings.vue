@@ -12,11 +12,13 @@
         class="container__house-list__house__wrapper"
         @click="setRoute(listing)"
       >
-        <img
-          :src="listing.image"
-          alt="house-image"
-          class="container__house-list__house__wrapper__image"
-        />
+        <div class="container__house-list__house__wrapper__container-image">
+          <img
+            :src="listing.image"
+            alt="house-image"
+            class="container__house-list__house__wrapper__container-image__image"
+          />
+        </div>
         <div class="container__house-list__house__wrapper__details">
           <p class="container__house-list__house__wrapper__details__street">
             {{ listing.location.street }}
@@ -61,7 +63,10 @@
           </div>
         </div>
       </div>
-      <EditDelete v-if="showEdit && listing.madeByMe" :selected-listing="listing" />
+      <EditDelete
+        v-if="showEdit && listing.madeByMe"
+        :selected-listing="listing"
+      />
     </div>
     <div v-if="count === 0" class="container__house-list__not-found">
       <img
@@ -77,7 +82,7 @@
 
 <script>
 import axios from "axios"
-import EditDelete from "./EditDelete"
+import EditDelete from "../EditDelete/EditDelete"
 
 export default {
   name: "Listings",
@@ -142,7 +147,7 @@ export default {
     },
   },
   watch: {
-    availableHouses(to) {
+    availableListings(to) {
       if (to) this.count = to.length
     },
   },
@@ -150,7 +155,7 @@ export default {
     setRoute(listing) {
       this.$router.push({ path: `/listing/${listing.id}` })
       this.$store.commit("setNavigationActiveItem", "/")
-      this.$store.commit('setSelectedListing', listing)
+      this.$store.commit("setSelectedListing", listing)
     },
   },
 }

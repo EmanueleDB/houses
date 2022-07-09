@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    <Navigation />
-    <div class="wrapper">
-      <router-view :key="$route.path" />
-    </div>
-  </div>
+      <Navigation />
+        <router-view :key="$route.path" />
+      </div>
 </template>
 
 <script>
@@ -16,7 +14,7 @@ export default {
   },
   data() {
     return {
-      windowWidth: "",
+      windowWidth: window.innerWidth,
     }
   },
   watch: {
@@ -27,7 +25,6 @@ export default {
   mounted() {
     //When the app load for the first time, I fetch the listings
     this.$store.dispatch("getListings")
-
     window.addEventListener("resize", this.checkScreenSize)
   },
   beforeDestroy() {
@@ -40,15 +37,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-#app {
-  .wrapper {
-    margin: 0;
-
-    @include respond-to("md") {
-      margin: 0 10% 0 10%;
-    }
-  }
-}
-</style>

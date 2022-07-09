@@ -15,11 +15,6 @@
   @include font-montserrat;
   font-weight: 600;
 }
-//Regular
-@mixin font-montserrat-regular {
-  @include font-montserrat;
-  font-weight: 400;
-}
 //Medium
 @mixin font-montserrat-medium {
   @include font-montserrat;

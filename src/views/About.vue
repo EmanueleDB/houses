@@ -44,17 +44,15 @@
   &__about {
     display: flex;
     grid-column: span 12;
-    margin: 1rem 0;
     justify-content: center;
     flex-direction: column;
+    margin: 1rem 5%;
 
     @include respond-to("md") {
-      margin: 3rem 0 1rem 0;
+      margin: 2rem 0 1rem 0;
     }
 
     p {
-      @include font-montserrat-regular;
-      font-size: 12px;
       line-height: 1.6;
     }
 
