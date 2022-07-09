@@ -78,7 +78,7 @@
                   >Upload picture(PNG or JPG)*</label
                 >
                 <img
-                  v-if="isPatching"
+                  v-if="isPatching && newListing.image"
                   class="form__box__inputs__preview"
                   :src="newListing.image"
                   alt="image"
@@ -262,7 +262,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.errors)
     if (this.isPatching) this.adaptSchema()
   },
   methods: {
@@ -304,7 +303,6 @@ export default {
     //To add a house I need to perform 2 calls, the first one will post the house and with the id given in its response
     //I can perform the second call to upload the image
     async createListing() {
-      console.log('clicked')
       try {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const response = await axios({
@@ -317,21 +315,9 @@ export default {
         })
         //Edit
         if (this.isPatching) {
-          await this.$store.commit("setSelectedListing", this.listingToPatch)
-          await this.$store.dispatch("getListings")
-          await this.$router.push({
-            path: `/`,
-          })
+          this.patchingActions()
         } else {
-          //uploading the image based on the id
-          await this.uploadImage(this.files[0], response.data.id)
-          await this.$store.dispatch("getListings")
-          const found = this.$store.state.listings.filter(
-            (listing) => listing.id === response.data.id
-          )
-          await this.$store.commit("setSelectedListing", found[0])
-          //redirecting to the created/edited listing page
-          await this.$router.push({ path: `/listing/${response.data.id}` })
+          this.creatingActions(response.data.id)
         }
       } catch (e) {
         this.checkErrors(e.response.data.data)
@@ -341,11 +327,13 @@ export default {
     getFile(e) {
       this.files = e.target.files
       if (!this.files.length) return
-      const reader = new FileReader()
-      reader.onload = () => {
-        this.previewImage = reader.result
+      else {
+        const reader = new FileReader()
+        reader.onload = () => {
+          this.previewImage = reader.result
+        }
+        reader.readAsDataURL(this.files[0])
       }
-      reader.readAsDataURL(this.files[0])
     },
 
     async uploadImage(file, id) {
@@ -362,6 +350,25 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    async patchingActions() {
+      await this.uploadImage(this.files[0], this.listingToPatch.id)
+      await this.$store.commit("setSelectedListing", this.listingToPatch)
+      await this.$store.dispatch("getListings")
+      await this.$router.push({
+        path: `/`,
+      })
+    },
+    async creatingActions(id) {
+      //uploading the image based on the id
+      await this.uploadImage(this.files[0], id)
+      await this.$store.dispatch("getListings")
+      const found = this.$store.state.listings.filter(
+        (listing) => listing.id === id
+      )
+      await this.$store.commit("setSelectedListing", found[0])
+      //redirecting to the created/edited listing page
+      await this.$router.push({ path: `/listing/${id}` })
     },
   },
 }
