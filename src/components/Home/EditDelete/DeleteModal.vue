@@ -1,21 +1,22 @@
 <template>
   <div>
-    <div v-if="showModal" class="overlay"></div>
-    <div v-if="showModal" class="modal" id="modal">
-      <div class="modal__header">Delete listing</div>
-      <div class="modal__body">
-        <p>
-          Are you sure you want to delete this listing. <br />
-          This action cannot de undone.
-        </p>
-      </div>
-      <div class="modal__footer">
-        <button class="modal__footer__delete" @click="$emit('delete')">
-          YES, DELETE
-        </button>
-        <button class="modal__footer__back" @click="$emit('close')">
-          GO, BACK
-        </button>
+    <div v-if="showModal" class="overlay">
+      <div v-if="showModal" class="modal" id="modal">
+        <div class="modal__header">Delete listing</div>
+        <div class="modal__body">
+          <p>
+            Are you sure you want to delete this listing. <br />
+            This action cannot de undone.
+          </p>
+        </div>
+        <div class="modal__footer">
+          <button class="modal__footer__delete" @click="$emit('delete')">
+            YES, DELETE
+          </button>
+          <button class="modal__footer__back" @click="$emit('close')">
+            GO, BACK
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -62,7 +63,6 @@ export default {
   @include respond-to("md") {
     height: 300px;
     width: 500px;
-    top: unset;
   }
   &__header {
     font-size: 1.5rem;
