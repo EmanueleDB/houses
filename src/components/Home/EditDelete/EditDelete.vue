@@ -108,6 +108,7 @@ export default Vue.extend({
   display: flex;
   position: absolute;
   right: 10px;
+  top: 10px;
   @include respond-to("md") {
     right: 2rem;
     top: 1rem;
