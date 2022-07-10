@@ -114,7 +114,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      count: 0,
+      count: null as number | null,
     }
   },
   computed: {
