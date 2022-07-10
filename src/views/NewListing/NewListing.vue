@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="createListing()">
     <div class="background">
+  <form @submit.prevent="createListing()">
       <div class="new-listing">
         <div class="new-listing__title">
           <Back :change-style="true" />
@@ -239,8 +239,8 @@
           </button>
         </div>
       </div>
-    </div>
   </form>
+    </div>
 </template>
 
 <script lang="ts">

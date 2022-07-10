@@ -9,6 +9,7 @@ form {
 .background {
   background-image: url("/src/static/images/img_background@3x.png");
   background-size: 100% 100%;
+  padding-bottom: 2rem;
 }
 .new-listing {
   margin: 0 1rem;
@@ -170,6 +171,8 @@ form {
       cursor: pointer;
       font-size: 12px;
       margin-top: 1rem;
+      box-sizing: border-box;
+
       @include respond-to("md") {
         font-size: 18px;
         float: right;
