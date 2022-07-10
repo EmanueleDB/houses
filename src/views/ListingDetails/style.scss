@@ -24,10 +24,6 @@
 
     &__image {
       width: 100%;
-      @include respond-to("md") {
-        width: 100%;
-        margin-right: 10%;
-      }
     }
 
     &__specs {
