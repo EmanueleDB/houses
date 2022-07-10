@@ -88,7 +88,7 @@ export default Vue.extend({
         })
         if (!response) console.log("Oops, there was a problem: we were unable to delete your listing")
         this.showModal = false
-        await this.$store.dispatch("getListings")
+        await this.$store.dispatch("FETCH_LISTINGS")
         if (this.redirect) this.$router.push({ path: `/` })
       } catch (e) {
         console.log(e)

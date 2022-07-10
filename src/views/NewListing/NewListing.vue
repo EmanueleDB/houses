@@ -282,6 +282,8 @@ export default Vue.extend({
   },
   mounted() {
     if (this.isPatching) this.adaptSchema()
+    console.log(this.previewImage)
+    console.log(this.listingToPatch)
   },
   methods: {
     //the listing object in the api has a different structure than the object we send for creating/editing a listing
@@ -380,7 +382,7 @@ export default Vue.extend({
     async patchingActions() {
       await this.uploadImage(this.files[0], this.listingToPatch.id)
       await this.$store.commit("setSelectedListing", this.listingToPatch)
-      await this.$store.dispatch("getListings")
+      await this.$store.dispatch("FETCH_LISTINGS")
       await this.$router.push({
         path: `/`,
       })
@@ -389,7 +391,7 @@ export default Vue.extend({
     //uploading the image based on the id
     async creatingActions(id: string) {
       await this.uploadImage(this.files[0], id)
-      await this.$store.dispatch("getListings")
+      await this.$store.dispatch("FETCH_LISTINGS")
       const found = this.$store.state.listings.filter(
         (listing: { [key: string]: string }) => listing.id === id
       )

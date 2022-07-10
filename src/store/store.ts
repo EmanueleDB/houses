@@ -53,7 +53,7 @@ export default new Vuex.Store({
   //different places
   //Everytime I create or delete a new listing I dispatch this action
   actions: {
-    async getListings({ commit, state }) {
+    async FETCH_LISTINGS({ commit, state }) {
       try {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const response = await axios.get(
