@@ -5,13 +5,6 @@
       src="../../../static/images/ic_search@3x.png"
       alt="search icon"
     />
-    <img
-      v-if="searchQuery !== ''"
-      class="container__search__clear"
-      src="../../../static/images/ic_clear@3x.png"
-      alt="clear"
-      @click="clearSearch()"
-    />
     <input
       v-model="searchQuery"
       type="text"
@@ -19,6 +12,14 @@
       class="container__search__input-text"
       @input="changeInput($event)"
     />
+    <img
+      v-if="searchQuery !== ''"
+      class="container__search__clear"
+      src="../../../static/images/ic_clear@3x.png"
+      alt="clear"
+      @click="clearSearch()"
+    />
+
     <div class="tab container__search__tab">
       <button
         :class="[
@@ -42,8 +43,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue"
+
+export default Vue.extend ({
   name: "Search",
   data() {
     return {
@@ -52,11 +55,11 @@ export default {
     }
   },
   methods: {
-    setOrder(value) {
+    setOrder(value: string) {
       this.clicked = value
       this.$emit("sort", value)
     },
-    changeInput(event) {
+    changeInput(event: any) {
       this.$emit("searchQuery", event.target.value)
     },
     clearSearch() {
@@ -64,7 +67,7 @@ export default {
       this.$emit('searchQuery', '')
     }
   },
-}
+})
 </script>
 
 <style lang="scss">

@@ -152,8 +152,8 @@
                   v-model="newListing.hasGarage"
                 >
                   <option value="" disabled selected hidden>Select</option>
-                  <option value="true">Yes</option>
                   <option value="false">No</option>
+                  <option value="true">Yes</option>
                 </select>
               </div>
               <div class="form__box__inputs__double">
@@ -247,31 +247,41 @@
   </form>
 </template>
 
-<script>
-import Back from "@/views/ListingDetails/Helpers/Back"
+<script lang="ts">
+import Back from "@/views/ListingDetails/Helpers/Back.vue"
 import axios from "axios"
-export default {
+import Vue from "vue"
+import State from "@/models/state"
+import ListingToDB from "@/models/listingToDB"
+import ListingFromDB from "@/models/listingFromDB"
+
+interface Data {
+  newListing: ListingToDB
+  errors: string[]
+  files: any
+  previewImage: string | null | ArrayBuffer
+}
+export default Vue.extend({
   name: "NewListing",
   components: { Back },
-  data() {
+  data(): Data {
     return {
-      newListing: { hasGarage: "" },
+      newListing: { hasGarage: "" } as unknown as ListingToDB,
       errors: [],
       files: {},
       previewImage: null,
     }
   },
   computed: {
-    isPatching() {
+    isPatching(): State {
       return this.$store.state.patching
     },
-    listingToPatch() {
+    listingToPatch(): ListingFromDB {
       return this.$store.state.listingToPatch
     },
   },
   mounted() {
     if (this.isPatching) this.adaptSchema()
-    console.log(this.listingToPatch)
   },
   methods: {
     //the listing object in the api has a different structure than the object we send for creating/editing a listing
@@ -285,8 +295,6 @@ export default {
         bedrooms: this.listingToPatch.rooms.bedrooms,
         bathrooms: this.listingToPatch.rooms.bathrooms,
         size: this.listingToPatch.size,
-        streetName: street,
-        houseNumber: number,
         zip: this.listingToPatch.location.zip,
         city: this.listingToPatch.location.city,
         constructionYear: this.listingToPatch.constructionYear,
@@ -296,13 +304,13 @@ export default {
       }
     },
 
-    errorHelper(e, property) {
+    errorHelper(e: any, property: string) {
       if (e.target.value)
         this.errors = this.errors.filter((error) => error !== property)
       else this.errors.push(property)
     },
 
-    checkErrors(missingRequiredFields) {
+    checkErrors(missingRequiredFields: []) {
       this.errors = []
       missingRequiredFields.map((field) => {
         this.errors.push(field)
@@ -328,12 +336,12 @@ export default {
         } else {
           this.creatingActions(response.data.id)
         }
-      } catch (e) {
+      } catch (e: any) {
         this.checkErrors(e.response.data.data)
       }
     },
 
-    getFile(e) {
+    getFile(e: any) {
       this.files = e.target.files
       if (this.files.length === 0) return
       else {
@@ -345,7 +353,7 @@ export default {
       }
     },
 
-    async uploadImage(file, id) {
+    async uploadImage(file: string | Blob, id: string) {
       try {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const data = new FormData()
@@ -379,18 +387,18 @@ export default {
     },
 
     //uploading the image based on the id
-    async creatingActions(id) {
+    async creatingActions(id: string) {
       await this.uploadImage(this.files[0], id)
       await this.$store.dispatch("getListings")
       const found = this.$store.state.listings.filter(
-        (listing) => listing.id === id
+        (listing: { [key: string]: string }) => listing.id === id
       )
       await this.$store.commit("setSelectedListing", found[0])
       //redirecting to the created/edited listing page
       await this.$router.push({ path: `/listing/${id}` })
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

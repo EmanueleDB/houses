@@ -52,18 +52,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 //See comment in the NewListing.vue file
 //I can show the details of the new listing because the body that is needed to send the POST request of the new listing
 // is different from the object of the other houses already present in the API
 
-import Listings from "@/components/Home/Listings/Listings"
-import ImageHelper from "./Helpers/IconHelper"
-import EditDelete from "@/components/Home/EditDelete/EditDelete"
-import Section from "./Helpers/Section"
-import Back from "./Helpers/Back"
+import Listings from "@/components/Home/Listings/Listings.vue";
+import ImageHelper from "./Helpers/IconHelper.vue"
+import EditDelete from "@/components/Home/EditDelete/EditDelete.vue"
+import Section from "./Helpers/Section.vue"
+import Back from "./Helpers/Back.vue"
+import Vue from "vue"
 
-export default {
+export default Vue.extend ({
   name: "ListingDetails",
   components: {
     Back,
@@ -119,7 +120,7 @@ export default {
       return this.$store.state.selectedListing
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

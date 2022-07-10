@@ -9,8 +9,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue"
+
+export default Vue.extend({
   name: "IconHelper",
   props: {
     property: {
@@ -32,7 +34,7 @@ export default {
   },
 
   computed: {
-    value() {
+    value(this: any) {
       return this.$store.state.selectedListing
     },
     setValue() {
@@ -43,5 +45,5 @@ export default {
       return this.value[this.property]
     },
   },
-}
+})
 </script>

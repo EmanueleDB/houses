@@ -52,7 +52,7 @@
       height: 550px;
     }
 
-      h3 {
+    h3 {
       grid-column: span 12;
     }
 
@@ -88,18 +88,27 @@
       grid-column: span 7;
     }
 
+    h1 {
+      font-size: 14px;
+      @include font-montserrat-bold;
+      @include respond-to("md") {
+        font-size: 22px;
+      }
+    }
+
     p {
       font-size: 12px;
+      margin: 0 10px 0 0;
 
       @include respond-to("md") {
         font-size: 16px;
       }
-      }
+    }
 
     &__icon {
-      width: 20px;
-      height: 20px;
-      margin: 0 10px;
+      width: 15px;
+      height: 15px;
+      margin: 0 10px 0 0;
     }
   }
 }

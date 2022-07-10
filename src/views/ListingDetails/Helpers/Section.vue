@@ -11,10 +11,11 @@
   </div>
 </template>
 
-<script>
-import ImageHelper from "./IconHelper"
+<script lang="ts">
+import ImageHelper from "./IconHelper.vue"
+import Vue from "vue"
 
-export default {
+export default Vue.extend({
   name: "Section",
   components: {
     ImageHelper,
@@ -25,5 +26,5 @@ export default {
       required: true,
     },
   },
-}
+})
 </script>
