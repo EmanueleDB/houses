@@ -3,22 +3,25 @@ import Vuex from "vuex"
 import createPersistedState from "vuex-persistedstate"
 import axios from "axios"
 import listings from "@/components/Home/Listings/Listings.vue"
+import State from "@/models/state"
 
 Vue.use(Vuex)
 
+const state: State = {
+  listings: [],
+  selectedListing: {},
+  navigationActiveItem: "",
+  windowWidth: "",
+  patching: false,
+  listingToPatch: {},
+}
+
 export default new Vuex.Store({
   plugins: [createPersistedState()],
-  state: {
-    listings: [],
-    selectedListing: {},
-    navigationActiveItem: "",
-    windowWidth: "",
-    patching: false,
-    listingToPatch: {},
-  },
+  state,
   getters: {},
   mutations: {
-    setListings(state: any, payload: []) {;
+    setListings(state: any, payload: []) {
       state.listings = payload
     },
 
@@ -40,9 +43,14 @@ export default new Vuex.Store({
     setWindowWidth(state: any, payload: number) {
       state.windowWidth = payload
     },
+    setSortedBy(state: any, payload: string) {
+      state.listings = state.listings.sort((a: any, b: any) =>
+        a[payload] > b[payload] ? 1 : -1
+      )
+    },
   },
-  //I have decided to set the fetch request directly in the store because I would need to access to the list
-  //from multiple places
+  //I have decided to set the fetch request directly in the store because I would need to refresh the list from
+  //different places
   //Everytime I create or delete a new listing I dispatch this action
   actions: {
     async getListings({ commit, state }) {

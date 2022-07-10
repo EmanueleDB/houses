@@ -58,7 +58,8 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+export default Vue.extend( {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Navigation",
   data() {
@@ -103,7 +104,7 @@ export default {
       this.$store.commit("setNavigationActiveItem", url)
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

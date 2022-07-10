@@ -29,13 +29,14 @@
     />
   </div>
 </template>
-<script>
+<script lang="ts">
 //The edit and delete icons are in multiple places but they not always shown (like in the reccomended column)
 //With some conditions (by props) I'm able to decide where I want them and when they have to be visible
 import axios from "axios"
-import DeleteModal from "./DeleteModal"
+import Vue from "vue"
+import DeleteModal from "@/components/Home/EditDelete/DeleteModal.vue"
 
-export default {
+export default Vue.extend({
   name: "EditDelete",
   components: {
     DeleteModal,
@@ -61,12 +62,13 @@ export default {
   },
   watch: {
     showModal(to) {
+      const body = document.querySelector("body")
       if (to) {
-        document.querySelector("body").style.height = "100%"
-        document.querySelector("body").style.overflow = "hidden"
+        body!.style.height = "100%"
+        body!.style.overflow = "hidden"
       } else {
-        document.querySelector("body").style.height = "unset"
-        document.querySelector("body").style.overflow = "unset"
+        body!.style.height = "unset"
+        body!.style.overflow = "unset"
       }
     },
   },
@@ -76,7 +78,7 @@ export default {
     },
   },
   methods: {
-    async deleteListing(id) {
+    async deleteListing(id: string) {
       try {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
         const response = await axios({
@@ -92,13 +94,13 @@ export default {
         console.log(e)
       }
     },
-    async editListing(selectedListing) {
+    async editListing(selectedListing: { [key: string]: string | number }) {
       this.$store.commit("setListingToPatch", selectedListing)
       this.$store.commit("isPatching", true)
       this.$router.push({ path: `/edit-listing/${selectedListing.id}` })
     },
   },
-}
+})
 </script>
 
 <style lang="scss">
@@ -108,9 +110,10 @@ export default {
   right: 10px;
   @include respond-to("md") {
     right: 2rem;
+    top: 1rem;
   }
 
-    &__icon {
+  &__icon {
     width: 15px;
     height: 15px;
     margin-left: 10px;

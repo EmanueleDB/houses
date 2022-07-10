@@ -14,21 +14,23 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue"
+
+export default Vue.extend({
   name: "Back",
   props: {
     changeStyle: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    windowWidth() {
+    windowWidth(this: any) {
       return this.$store.state.windowWidth
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

@@ -43,8 +43,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue"
+
+export default Vue.extend ({
   name: "Search",
   data() {
     return {
@@ -53,11 +55,11 @@ export default {
     }
   },
   methods: {
-    setOrder(value) {
+    setOrder(value: string) {
       this.clicked = value
       this.$emit("sort", value)
     },
-    changeInput(event) {
+    changeInput(event: any) {
       this.$emit("searchQuery", event.target.value)
     },
     clearSearch() {
@@ -65,7 +67,7 @@ export default {
       this.$emit('searchQuery', '')
     }
   },
-}
+})
 </script>
 
 <style lang="scss">

@@ -37,11 +37,12 @@
   </div>
 </template>
 
-<script>
-import Listings from "./Listings/Listings"
-import Search from "./Search/Search"
+<script lang="ts">
+import Listings from "./Listings/Listings.vue"
+import Search from "./Search/Search.vue"
+import Vue from "vue"
 
-export default {
+export default Vue.extend({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Home",
   components: {
@@ -60,14 +61,14 @@ export default {
     },
   },
   methods: {
-    getFilter(value) {
+    getFilter(value: string) {
       this.sort = value
     },
-    getInput(value) {
+    getInput(value: string) {
       this.searchQuery = value
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

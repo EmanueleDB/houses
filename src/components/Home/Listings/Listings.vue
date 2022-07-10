@@ -80,11 +80,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from "axios"
-import EditDelete from "../EditDelete/EditDelete"
+import Vue from "vue"
+import EditDelete from "@/components/Home/EditDelete/EditDelete.vue"
 
-export default {
+export default Vue.extend({
   name: "Listings",
   components: {
     EditDelete,
@@ -113,31 +114,28 @@ export default {
   },
   data() {
     return {
-      count: null,
+      count: 0,
     }
   },
   computed: {
-    listings: {
-      get: function () {
-        return this.$store.state.listings
-      },
-      set: function () {},
+    listings(this: any) {
+      return this.$store.state.listings
     },
     availableListings() {
       if (this.shortList) {
         return this.listings
-          .filter((house) => house.id !== this.selectedId)
+          .filter(
+            (house: { [key: string]: string | number }) =>
+              house.id !== this.selectedId
+          )
           .splice(0, 3)
       }
-      if (this.sortBy === "price")
-        this.listings = this.listings.sort((a, b) =>
-          a.price > b.price ? 1 : -1
-        )
-      else
-        this.listings = this.listings.sort((a, b) => (a.size > b.size ? 1 : -1))
+      if (this.sortBy === "price") this.$store.commit("setSortedBy", "price")
+      else this.$store.commit("setSortedBy", "size")
+
       if (this.searchQuery === "") return this.listings
       return this.listings?.filter(
-        (house) =>
+        (house: any) =>
           house.location.street?.includes(this.searchQuery) ||
           house.location.city?.includes(this.searchQuery) ||
           house.location.zip.includes(this.searchQuery) ||
@@ -147,18 +145,18 @@ export default {
     },
   },
   watch: {
-    availableListings(to) {
+    availableListings(to: string) {
       if (to) this.count = to.length
     },
   },
   methods: {
-    setRoute(listing) {
+    setRoute(listing: { [key: string]: string | number }) {
       this.$router.push({ path: `/listing/${listing.id}` })
       this.$store.commit("setNavigationActiveItem", "/")
       this.$store.commit("setSelectedListing", listing)
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

@@ -6,9 +6,10 @@
 </template>
 
 <script>
-import Navigation from "./components/Navigation"
+import Navigation from "./components/Navigation.vue"
+import Vue from "vue"
 
-export default {
+export default Vue.extend ({
   components: {
     Navigation,
   },
@@ -35,5 +36,5 @@ export default {
       this.windowWidth = e.currentTarget.innerWidth
     },
   },
-}
+})
 </script>
