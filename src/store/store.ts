@@ -31,8 +31,8 @@ export default new Vuex.Store({
     setListingToPatch(state: any, payload: object) {
       state.listingToPatch = payload
     },
-    resetSelectedListing(state: any) {
-      state.selectedListing = {}
+    resetListingToPatch(state: any) {
+      state.listingToPatch = {}
     },
     isPatching(state: any, payload: boolean) {
       state.patching = payload
