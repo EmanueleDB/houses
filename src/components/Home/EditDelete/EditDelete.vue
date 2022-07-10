@@ -86,7 +86,7 @@ export default Vue.extend({
           url: `https://api.intern.d-tt.nl/api/houses/${id}`,
           headers,
         })
-        if (!response) console.log("Oops, there was a problem...")
+        if (!response) console.log("Oops, there was a problem: we were unable to delete your listing")
         this.showModal = false
         await this.$store.dispatch("getListings")
         if (this.redirect) this.$router.push({ path: `/` })
