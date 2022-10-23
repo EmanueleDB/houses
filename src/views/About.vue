@@ -2,7 +2,7 @@
   <div class="container">
     <div class="container__about">
       <h1 style="text-align: center">About</h1>
-      <h2>About DTT Real Estate</h2>
+      <h2>About Houses Real Estate</h2>
       <p>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -23,17 +23,9 @@
       <div class="container__about__wrapper">
         <img
           class="container__about__wrapper__image"
-          src="../static/images/img_logo_dtt@3x.png"
+          src="../static/images/logo.png"
           alt="logo"
         />
-        <div class="container__about__wrapper__website">
-          <p>By DTT</p>
-          <a
-            class="container__about__wrapper__website__link"
-            href="https://www.d-tt.nl/en/"
-            >www.d-tt.nl</a
-          >
-        </div>
       </div>
     </div>
   </div>

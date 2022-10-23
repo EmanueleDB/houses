@@ -4,7 +4,7 @@
       <div class="navigation-container__navigation__container">
         <img
           class="navigation-container__navigation__container__image"
-          src="../static/images/img_logo_dtt@3x.png"
+          src="../static/images/logo.png"
           alt="logo"
           @click="
             $router.push('/').catch(() => {})
