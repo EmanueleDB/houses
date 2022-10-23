@@ -281,8 +281,6 @@ export default Vue.extend({
     else this.$store.commit("resetListingToPatch")
   },
   methods: {
-    //the listing object in the api has a different structure than the object we send for creating/editing a listing
-    //I need to adapt it when it has been fetched to show it in this component
     adaptSchema() {
       const [street, number] = this.listingToPatch.location.street.split(" ")
       this.newListing = {
@@ -314,8 +312,6 @@ export default Vue.extend({
       })
     },
 
-    //To add a house I need to perform 2 calls, the first one will post the house and with the id given in its response
-    //I can perform the second call to upload the image
     async createListing() {
       try {
         const headers = { "X-Api-Key": process.env.VUE_APP_APIKEY }
@@ -327,7 +323,6 @@ export default Vue.extend({
           data: this.newListing,
           headers,
         })
-        //Edit
         if (this.isPatching) {
           this.patchingActions()
         } else {
@@ -383,7 +378,6 @@ export default Vue.extend({
       })
     },
 
-    //uploading the image based on the id
     async creatingActions(id: string) {
       await this.uploadImage(this.files[0], id)
       await this.$store.dispatch("FETCH_LISTINGS")
@@ -391,7 +385,6 @@ export default Vue.extend({
         (listing: { [key: string]: string }) => listing.id === id
       )
       await this.$store.commit("setSelectedListing", found[0])
-      //redirecting to the created/edited listing page
       await this.$router.push({ path: `/listing/${id}` })
     },
   },

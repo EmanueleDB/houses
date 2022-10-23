@@ -30,8 +30,6 @@
   </div>
 </template>
 <script lang="ts">
-//The edit and delete icons are in multiple places but they not always shown (like in the reccomended column)
-//With some conditions (by props) I'm able to decide where I want them and when they have to be visible
 import axios from "axios"
 import Vue from "vue"
 import DeleteModal from "@/components/Home/EditDelete/DeleteModal.vue"

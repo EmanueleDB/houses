@@ -49,9 +49,6 @@ export default new Vuex.Store({
       )
     },
   },
-  //I have decided to set the fetch request directly in the store because I would need to refresh the list from
-  //different places
-  //Everytime I create or delete a new listing I dispatch this action
   actions: {
     async FETCH_LISTINGS({ commit, state }) {
       try {

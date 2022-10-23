@@ -53,10 +53,6 @@
 </template>
 
 <script lang="ts">
-//See comment in the NewListing.vue file
-//I can show the details of the new listing because the body that is needed to send the POST request of the new listing
-// is different from the object of the other houses already present in the API
-
 import Listings from "@/components/Home/Listings/Listings.vue";
 import ImageHelper from "./Helpers/IconHelper.vue"
 import EditDelete from "@/components/Home/EditDelete/EditDelete.vue"

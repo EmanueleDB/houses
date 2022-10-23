@@ -24,7 +24,6 @@ export default Vue.extend ({
     },
   },
   mounted() {
-    //When the app load for the first time, I fetch the listings
     this.$store.dispatch("FETCH_LISTINGS")
     window.addEventListener("resize", this.checkScreenSize)
   },
